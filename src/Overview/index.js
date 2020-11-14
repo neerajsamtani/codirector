@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 
 import ReactFlow, { removeElements, addEdge, MiniMap, Controls, Background, isNode } from 'react-flow-renderer';
+import ColorSelectorNode from './ColorSelectorNode';
 
 const onLoad = (reactFlowInstance) => {
     console.log('flow loaded:', reactFlowInstance);
     reactFlowInstance.fitView();
+};
+const nodeTypes = {
+  selectorNode: ColorSelectorNode,
 };
 
 // Log events
@@ -21,6 +25,7 @@ const initialElements = [
   {
     id: '1',
     type: 'input',
+    sourcePosition: 'right',
     data: {
       label: (
         <>
@@ -28,11 +33,12 @@ const initialElements = [
         </>
       ),
     },
-    position: { x: 250, y: 0 },
+    position: { x: 0, y: 200 },
   },
   {
     id: '2',
     type: 'output',
+    targetPosition: 'left',
     data: {
       label: (
         <>
@@ -40,7 +46,7 @@ const initialElements = [
         </>
       ),
     },
-    position: { x: 250, y: 400 },
+    position: { x: 900, y: 200 },
   },
 ];
 
@@ -53,6 +59,8 @@ const OverviewFlow = () => {
   const addNode = () => {
     setElements(elements.concat({
     id: `${elements.length + 1}`,
+    type: 'selectorNode',
+    style: { border: '1px solid #777', padding: 10, background: '#FFF' },
     data: {
         label: (
         <>
@@ -77,6 +85,7 @@ const OverviewFlow = () => {
       onMoveEnd={onMoveEnd}
       onLoad={onLoad}
       connectionLineStyle={connectionLineStyle}
+      nodeTypes={nodeTypes}
     >
 
       <MiniMap
