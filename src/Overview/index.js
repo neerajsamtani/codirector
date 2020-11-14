@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 
 import ReactFlow, { removeElements, addEdge, MiniMap, Controls, Background, isNode } from 'react-flow-renderer';
-import ColorSelectorNode from './ColorSelectorNode';
+import VideoNode from './VideoNode';
 
 const onLoad = (reactFlowInstance) => {
     console.log('flow loaded:', reactFlowInstance);
     reactFlowInstance.fitView();
 };
 const nodeTypes = {
-  selectorNode: ColorSelectorNode,
+  videoNode: VideoNode,
 };
 
 // Log events
@@ -54,12 +54,14 @@ const connectionLineStyle = { stroke: '#ddd' };
 
 const OverviewFlow = () => {
   const [elements, setElements] = useState(initialElements);
+  const [nextId, setNextId] = useState(3);
+
   const onElementsRemove = (elementsToRemove) => setElements((els) => removeElements(elementsToRemove, els));
   const onConnect = (params) => setElements((els) => addEdge(params, els));
   const addNode = () => {
     setElements(elements.concat({
-    id: `${elements.length + 1}`,
-    type: 'selectorNode',
+    id: `${nextId}`,
+    type: 'videoNode',
     style: { border: '1px solid #777', padding: 10, background: '#FFF' },
     data: {
         label: (
@@ -69,7 +71,8 @@ const OverviewFlow = () => {
         ),
     },
     position: { x: 0, y: 0 },
-    }))
+    }));
+    setNextId(nextId + 1)
   }
 
   return (
