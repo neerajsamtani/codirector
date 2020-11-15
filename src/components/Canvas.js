@@ -1,26 +1,18 @@
 import React, { useState } from 'react';
-
-import ReactFlow, { removeElements, addEdge, MiniMap, Controls, Background, isNode } from 'react-flow-renderer';
+import ReactFlow, { removeElements, addEdge, MiniMap, Controls, Background } from 'react-flow-renderer';
 import VideoNode from './VideoNode';
+import Buttons from './Buttons'
 
 const onLoad = (reactFlowInstance) => {
-    console.log('flow loaded:', reactFlowInstance);
-    reactFlowInstance.fitView();
+  console.log('flow loaded:', reactFlowInstance);
+  reactFlowInstance.fitView();
 };
+
+const connectionLineStyle = { stroke: '#ddd' };
 
 const nodeTypes = {
   videoNode: VideoNode,
 };
-
-// Log events
-const onPaneContextMenu = (event) => console.log('pane context menu', event);
-const onSelectionContextMenu = (event, nodes) => {
-  event.preventDefault();
-  console.log('selection context menu', nodes);
-};
-const onElementClick = (event, element) => console.log(`${isNode(element) ? 'node' : 'edge'} click:`, element);
-const onSelectionChange = (elements) => console.log('selection change', elements);
-const onMoveEnd = (transform) => console.log('zoom/move end', transform);
 
 const initialElements = [
   {
@@ -51,15 +43,11 @@ const initialElements = [
   },
 ];
 
-const connectionLineStyle = { stroke: '#ddd' };
-
-const OverviewFlow = () => {
+const Canvas = () => {
   const [elements, setElements] = useState(initialElements);
   const [nextId, setNextId] = useState(3);
 
-  const onElementsRemove = (elementsToRemove) => setElements((els) => removeElements(elementsToRemove, els));
-  const onConnect = (params) => setElements((els) => addEdge(params, els));
-  const addNode = () => {
+  const addVideoNode = () => {
     setElements(elements.concat({
     id: `${nextId}`,
     type: 'videoNode',
@@ -76,22 +64,20 @@ const OverviewFlow = () => {
     setNextId(nextId + 1)
   }
 
+  const onElementsRemove = (elementsToRemove) => setElements((els) => removeElements(elementsToRemove, els));
+  const onConnect = (params) => setElements((els) => addEdge(params, els));
+
   return (
-    <ReactFlow
+    <>
+      <Buttons addVideoNode={addVideoNode} />
+      <ReactFlow
       elements={elements}
-      onElementClick={onElementClick}
       onElementsRemove={onElementsRemove}
       onConnect={onConnect}
-      onPaneClick={addNode}
-      onPaneContextMenu={onPaneContextMenu}
-      onSelectionContextMenu={onSelectionContextMenu}
-      onSelectionChange={onSelectionChange}
-      onMoveEnd={onMoveEnd}
       onLoad={onLoad}
       connectionLineStyle={connectionLineStyle}
       nodeTypes={nodeTypes}
     >
-
       <MiniMap
         nodeStrokeColor={(n) => {
           if (n.style?.background) return n.style.background;
@@ -111,7 +97,8 @@ const OverviewFlow = () => {
       <Controls />
       <Background color="#aaa" gap={16} />
     </ReactFlow>
+    </>
   );
 };
 
-export default OverviewFlow;
+export default Canvas;

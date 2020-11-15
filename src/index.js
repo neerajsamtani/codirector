@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
-import TheView from './components/TheView';
+import Canvas from './components/Canvas';
 import './index.css';
 
 // const routes = [
@@ -26,7 +26,7 @@ const Header = () => {
 ReactDOM.render(
   <Router>
     <Header />
-    <TheView />
+    <Canvas />
     {/* <Switch>
       {routes.map((route) => (
         <Route exact path={route.path} render={() => <route.component />} key={route.path} />

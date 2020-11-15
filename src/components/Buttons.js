@@ -1,10 +1,10 @@
 import React from 'react'
 
-const Buttons = () => (
+const Buttons = ({ addVideoNode }) => (
     <header>
       <nav>
-        <button class="buttons">Add Video Node</button>
-        <button class="buttons">Add Question Node</button>
+        <button className="buttons" onClick={addVideoNode} >Add Video Node</button>
+        <button className="buttons" onClick={() => alert("TODO: Add Question Node")}>Add Question Node</button>
       </nav>
     </header>
 )

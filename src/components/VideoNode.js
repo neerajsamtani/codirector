@@ -2,14 +2,13 @@ import React, { memo, useState } from 'react';
 
 import { Handle } from 'react-flow-renderer';
 
-
-
 export default memo(({ data }) => {
 
   const [link, setLink] = useState('')
   const [thumbnail, setThumbnail] = useState(<div>Video Node</div>)
 
   // TODO: Validate link to get video
+  // TODO: Only allow one outgoing connection per video/answer
   const getThumbnail = (event) => {
     event.preventDefault()
     const VID_REGEX = /(?:youtube(?:-nocookie)?\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
@@ -45,7 +44,6 @@ export default memo(({ data }) => {
         />
         {/* <button type="submit">Submit</button> */}
       </form>
-      {/* <input className="nodrag" type="text" onChange={data.onChange} /> */}
       <Handle type="source" position="right" id="a" style={{ background: '#555' }} />
     </>
   );
