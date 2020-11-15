@@ -69,6 +69,7 @@ nav.is-open {
   display: block;
 }
 
+button,
 nav a {
   text-decoration: none;
   font-size: 14px;
@@ -82,6 +83,7 @@ nav a {
   text-align: center;
 }
 
+button,
 nav a,
 nav a:focus,
 nav a:active,
@@ -89,7 +91,9 @@ nav a:visited {
   color: #333;
 }
 
+button:hover,
 nav a:hover {
+  cursor: pointer;
   color: #333;
   box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.08);
 }
@@ -104,6 +108,18 @@ nav a.active:before {
   left: 0;
   top: 50%;
   transform: translateY(-50%);
+}
+
+button {
+  border: none;
+}
+
+button:focus {
+  outline: none;
+}
+
+button:active {
+  transform: translateY(1px);
 }
 
 .sourcedisplay {
@@ -156,13 +172,14 @@ nav a.active:before {
   nav {
     position: relative;
     display: block;
-    margin-left: auto;
+    margin-right: auto;
     width: auto;
     padding: 0;
     top: auto;
     left: auto;
   }
 
+  button,
   nav a {
     margin-left: 10px;
     font-size: 12px;

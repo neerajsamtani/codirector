@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import Overview from './Overview';
 import './index.css';
 
-const routes = [
-  {
-    path: '/',
-    component: Overview,
-    label: 'Overview',
-  },
-];
+// const routes = [
+//   {
+//     path: '/',
+//     component: Overview,
+//     label: 'Overview',
+//   },
+// ];
 
 const Header = () => {
 
@@ -23,14 +23,28 @@ const Header = () => {
   );
 };
 
+const Buttons = () => {
+
+  return (
+    <header>
+      <nav>
+        <button class="buttons">Add Video Node</button>
+        <button class="buttons">Add Question Node</button>
+      </nav>
+    </header>
+  );
+};
+
 ReactDOM.render(
   <Router>
     <Header />
-    <Switch>
+    <Buttons />
+    <Overview />
+    {/* <Switch>
       {routes.map((route) => (
         <Route exact path={route.path} render={() => <route.component />} key={route.path} />
       ))}
-    </Switch>
+    </Switch> */}
   </Router>,
   document.getElementById('root')
 );
