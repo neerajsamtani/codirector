@@ -7,6 +7,7 @@ const onLoad = (reactFlowInstance) => {
     console.log('flow loaded:', reactFlowInstance);
     reactFlowInstance.fitView();
 };
+
 const nodeTypes = {
   videoNode: VideoNode,
 };

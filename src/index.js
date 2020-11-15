@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
-import Overview from './Overview';
+import TheView from './components/TheView';
 import './index.css';
 
 // const routes = [
@@ -23,23 +23,10 @@ const Header = () => {
   );
 };
 
-const Buttons = () => {
-
-  return (
-    <header>
-      <nav>
-        <button class="buttons">Add Video Node</button>
-        <button class="buttons">Add Question Node</button>
-      </nav>
-    </header>
-  );
-};
-
 ReactDOM.render(
   <Router>
     <Header />
-    <Buttons />
-    <Overview />
+    <TheView />
     {/* <Switch>
       {routes.map((route) => (
         <Route exact path={route.path} render={() => <route.component />} key={route.path} />
