@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReactFlow, { removeElements, addEdge, MiniMap, Controls, Background } from 'react-flow-renderer';
 import VideoNode from './VideoNode';
+import QuestionNode from './QuestionNode';
 import Buttons from './Buttons'
 
 const onLoad = (reactFlowInstance) => {
@@ -12,6 +13,7 @@ const connectionLineStyle = { stroke: '#ddd' };
 
 const nodeTypes = {
   videoNode: VideoNode,
+  questionNode: QuestionNode,
 };
 
 const initialElements = [
@@ -55,7 +57,24 @@ const Canvas = () => {
     data: {
         label: (
         <>
-            NEW <strong>NODE</strong>
+            NEW <strong>VIDEO</strong> NODE
+        </>
+        ),
+    },
+    position: { x: 0, y: 0 },
+    }));
+    setNextId(nextId + 1)
+  }
+
+  const addQuestionNode = () => {
+    setElements(elements.concat({
+    id: `${nextId}`,
+    type: 'questionNode',
+    style: { border: '1px solid #777', padding: 10, background: '#FFF' },
+    data: {
+        label: (
+        <>
+            NEW <strong>QUESTION</strong> NODE
         </>
         ),
     },
@@ -69,7 +88,7 @@ const Canvas = () => {
 
   return (
     <>
-      <Buttons addVideoNode={addVideoNode} />
+      <Buttons addVideoNode={addVideoNode} addQuestionNode={addQuestionNode} />
       <ReactFlow
       elements={elements}
       onElementsRemove={onElementsRemove}

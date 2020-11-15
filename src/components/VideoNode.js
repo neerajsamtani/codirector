@@ -5,10 +5,10 @@ import { Handle } from 'react-flow-renderer';
 export default memo(({ data }) => {
 
   const [link, setLink] = useState('')
-  const [thumbnail, setThumbnail] = useState(<div>Video Node</div>)
+  const [thumbnail, setThumbnail] = useState(<div>{data.label}</div>)
 
   // TODO: Validate link to get video
-  // TODO: Only allow one outgoing connection per video/answer
+  // TODO: Only allow one outgoing connection per video
   const getThumbnail = (event) => {
     event.preventDefault()
     const VID_REGEX = /(?:youtube(?:-nocookie)?\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
