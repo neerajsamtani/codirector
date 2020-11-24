@@ -5,12 +5,8 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
 import { useAuthState } from 'react-firebase-hooks/auth'
-// import { useList } from 'react-firebase-hooks/database'
-import firebaseConfig from '../firebase'
 
-firebase.initializeApp(firebaseConfig)
 const auth = firebase.auth()
-// const database = firebase.database()
 
 const SignIn = () => {
     const signInWithGoogle = () => {
@@ -30,17 +26,20 @@ const SignOut = () => {
 
 const App = () => {
     const [user] = useAuthState(auth)
-    // const [snapshots, loading, error] = useList(database.ref('list'))
-
-    // const currentUser = auth.currentUser;
 
     // TODO: Add user as database entry
-    // if (currentUser != null) {
+    // if (user != null) {
+    //     // Get current user data
+    //     const currentUser = auth.currentUser;
+    //     // Add current user to database
     //     database.ref('users/' + currentUser.uid).set({
     //         name: currentUser.displayName,
     //         email: currentUser.email,
     //         profile_picture : currentUser.photoURL,
     //       })
+
+    //     // database.ref('projects/' + newProjectKey).set(newProject)
+        
     //     console.log("Added user")
     // }
 

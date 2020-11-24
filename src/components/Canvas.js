@@ -1,8 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactFlow, { removeElements, addEdge, MiniMap, Controls, Background } from 'react-flow-renderer';
 import VideoNode from './VideoNode';
 import QuestionNode from './QuestionNode';
 import Buttons from './Buttons'
+import firebase from 'firebase/app'
+import 'firebase/database'
+import firebaseConfig from '../firebase'
+import { useList } from 'react-firebase-hooks/database'
+
+firebase.initializeApp(firebaseConfig)
+const database = firebase.database()
+
+// TODO: Allow to select project
+const projectId = "WeLImpeRjuSEThIeRNIC"
 
 // TODO: Add custom nodes to minimap
 
@@ -18,38 +28,17 @@ const nodeTypes = {
   questionNode: QuestionNode,
 };
 
-const initialElements = [
-  {
-    id: '1',
-    type: 'input',
-    sourcePosition: 'right',
-    data: {
-      label: (
-        <>
-          This is the <strong>START</strong>
-        </>
-      ),
-    },
-    position: { x: 0, y: 200 },
-  },
-  {
-    id: '2',
-    type: 'output',
-    targetPosition: 'left',
-    data: {
-      label: (
-        <>
-          This is the <strong>END</strong>
-        </>
-      ),
-    },
-    position: { x: 900, y: 200 },
-  },
-];
-
 const Canvas = () => {
-  const [elements, setElements] = useState(initialElements);
+  
+  const [elements, setElements] = useState([]);
   const [nextId, setNextId] = useState(3);
+
+  // Get elements from Firebase
+  const hook = () => {
+    database.ref('/projects/' + projectId + "/elements").once('value')
+      .then(snapshot => setElements(snapshot.val()))
+  }
+  useEffect(hook, [])
 
   const addVideoNode = () => {
     setElements(elements.concat({
