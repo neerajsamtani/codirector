@@ -41,36 +41,30 @@ const Canvas = () => {
   useEffect(hook, [])
 
   const addVideoNode = () => {
-    setElements(elements.concat({
-    id: `${nextId}`,
-    type: 'videoNode',
-    style: { border: '1px solid #777', padding: 10, background: '#FFF' },
-    data: {
-        label: (
-        <>
-            NEW <strong>VIDEO</strong> NODE
-        </>
-        ),
-    },
-    position: { x: 0, y: 0 },
-    }));
+    const newVideoNode = {
+      id: `${nextId}`,
+      type: 'videoNode',
+      style: { border: '1px solid #777', padding: 10, background: '#FFF' },
+      data: {
+          label: (<>NEW <strong>VIDEO</strong> NODE </>),
+      },
+      position: { x: 0, y: 0 },
+    }
+    setElements(elements.concat(newVideoNode));
     setNextId(nextId + 1)
   }
 
   const addQuestionNode = () => {
-    setElements(elements.concat({
-    id: `${nextId}`,
-    type: 'questionNode',
-    style: { border: '1px solid #777', padding: 10, background: '#FFF' },
-    data: {
-        label: (
-        <>
-            NEW <strong>QUESTION</strong> NODE
-        </>
-        ),
-    },
-    position: { x: 0, y: 0 },
-    }));
+    const newQuestionNode = {
+      id: `${nextId}`,
+      type: 'questionNode',
+      style: { border: '1px solid #777', padding: 10, background: '#FFF' },
+      data: {
+          label: (<>NEW <strong>QUESTION</strong> NODE</>),
+      },
+      position: { x: 0, y: 0 },
+      }
+    setElements(elements.concat(newQuestionNode))
     setNextId(nextId + 1)
   }
 

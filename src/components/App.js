@@ -3,7 +3,6 @@ import Header from './Header'
 import Canvas from './Canvas';
 import firebase from 'firebase/app' 
 import 'firebase/auth'
-import 'firebase/database'
 import { useAuthState } from 'react-firebase-hooks/auth'
 
 const auth = firebase.auth()
@@ -36,10 +35,7 @@ const App = () => {
     //         name: currentUser.displayName,
     //         email: currentUser.email,
     //         profile_picture : currentUser.photoURL,
-    //       })
-
-    //     // database.ref('projects/' + newProjectKey).set(newProject)
-        
+    //       })        
     //     console.log("Added user")
     // }
 
