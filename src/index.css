@@ -122,6 +122,11 @@ button:active {
   transform: translateY(1px);
 }
 
+.auth-button {
+  margin-left:auto; 
+  margin-right:0;
+}
+
 .sourcedisplay {
   position: absolute;
   top: 50px;

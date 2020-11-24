@@ -4,6 +4,8 @@ import VideoNode from './VideoNode';
 import QuestionNode from './QuestionNode';
 import Buttons from './Buttons'
 
+// TODO: Add custom nodes to minimap
+
 const onLoad = (reactFlowInstance) => {
   console.log('flow loaded:', reactFlowInstance);
   reactFlowInstance.fitView();
