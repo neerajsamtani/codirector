@@ -159,6 +159,14 @@ const Canvas = () => {
       return updatedElements
   });
 
+  const onNodeDragStop = (event, node) => {
+    setElements(els => {
+      const updatedElements = els.map(e => e.id === node.id ? node : e )
+      database.ref('projects/' + projectId + "/elements").set(updatedElements)
+      return updatedElements
+    })
+  }
+
   return (
     <>
       <Buttons addVideoNode={addVideoNode} addQuestionNode={addQuestionNode} />
@@ -167,6 +175,7 @@ const Canvas = () => {
       onElementsRemove={onElementsRemove}
       onConnect={onConnect}
       onLoad={onLoad}
+      onNodeDragStop={onNodeDragStop}
       connectionLineStyle={connectionLineStyle}
       nodeTypes={nodeTypes}
     >
