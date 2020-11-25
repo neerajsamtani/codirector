@@ -10,11 +10,14 @@ import firebaseConfig from '../firebase'
 firebase.initializeApp(firebaseConfig)
 const database = firebase.database()
 
-// TODO: Allow to select project
-const projectId = "WeLImpeRjuSEThIeRNIC"
+export {database}
 
+// TODO: Do I need to listen for events to update local state? Yes, if multiple people are collaborating. Not for MVP
 // TODO: Add custom nodes to minimap
 // TODO: Fix Styles
+// TODO: BUG FIX: Fix ID Discrepancy between nextId on Firebase. An element's id changes on first interaction. 
+// TODO: Allow to select project
+const projectId = "WeLImpeRjuSEThIeRNIC"
 
 const onLoad = (reactFlowInstance) => {
   console.log('flow loaded:', reactFlowInstance);
@@ -41,8 +44,6 @@ const Canvas = () => {
           initialElements.push(currentElement)
         }
         setElements(initialElements)
-        // TODO: Store Next ID on Firebase to prevent overlap
-        // TODO: MOST IMP: Sync question/video node input text with Firebase
       })
     database.ref('/projects/' + projectId + "/nextId").once('value')
       .then(snapshot => {
@@ -121,10 +122,10 @@ const Canvas = () => {
 
     const newVideoNodeJSON = JSON.parse(JSON.stringify(newVideoNode))
     database.ref('projects/' + projectId + "/elements/" + (nextId - 1)).set(newVideoNodeJSON)
-    database.ref('projects/' + projectId + "/nextId").set(nextId + 1)
+    .then(setElements(elements.concat(newVideoNode)))
 
-    setElements(elements.concat(newVideoNode))
-    setNextId(nextId + 1)
+    database.ref('projects/' + projectId + "/nextId").set(nextId + 1)
+    .then(setNextId(nextId + 1))
   }
 
   const addQuestionNode = () => {
@@ -141,11 +142,11 @@ const Canvas = () => {
       }
     
     const newQuestionNodeJSON = JSON.parse(JSON.stringify(newQuestionNode))
-    database.ref('projects/' + projectId + "/elements/" + (nextId - 1)).set(newQuestionNodeJSON)
-    database.ref('projects/' + projectId + "/nextId").set(nextId + 1)
+    database.ref('projects/' + projectId + "/elements/" + (nextId - 1)).set(newQuestionNode)
+    .then(setElements(elements.concat(newQuestionNode)))
 
-    setElements(elements.concat(newQuestionNode))
-    setNextId(nextId + 1)
+    database.ref('projects/' + projectId + "/nextId").set(nextId + 1)
+    .then(setNextId(nextId + 1))
   }
 
   const onElementsRemove = (elementsToRemove) => 
@@ -159,12 +160,20 @@ const Canvas = () => {
     setElements((els) => {
       const updatedElements = addEdge(params, els)
       database.ref('projects/' + projectId + "/elements").set(updatedElements)
+      database.ref('projects/' + projectId + "/nextId").set(nextId + 1)
+      .then(setNextId(nextId + 1))
       return updatedElements
   });
 
   const onNodeDragStop = (event, node) => {
+    // The node parameter here doesn't have all the data from oldNode
+    const oldNode = elements.find(n => n.id === node.id)
+    const updatedNode = {
+      ...oldNode,
+      position: node.position
+    }
     setElements(els => {
-      const updatedElements = els.map(e => e.id === node.id ? node : e )
+      const updatedElements = els.map(e => e.id === node.id ? updatedNode : e )
       database.ref('projects/' + projectId + "/elements").set(updatedElements)
       return updatedElements
     })

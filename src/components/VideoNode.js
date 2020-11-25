@@ -1,6 +1,12 @@
 import React, { memo, useState } from 'react';
 import { Handle } from 'react-flow-renderer';
 import parse from 'html-react-parser'
+
+import {database} from './Canvas'
+
+// TODO: Allow to select project
+const projectId = "WeLImpeRjuSEThIeRNIC"
+
 export default ({ id, data }) => {
 
   const [link, setLink] = useState(data.value)
@@ -24,8 +30,9 @@ export default ({ id, data }) => {
   }
 
   const handleLinkChange = (event) => {
-    // data.onChange(id, event)
-    setLink(event.target.value)
+    // TODO: Update elements array
+    database.ref('projects/' + projectId + "/elements/" + (id-1) + "/data/value/").set(event.target.value)
+    .then(setLink(event.target.value))
   }
 
   return (

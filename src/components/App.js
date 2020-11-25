@@ -1,9 +1,10 @@
 import React from 'react'
 import Header from './Header'
 import Canvas from './Canvas';
+import { useAuthState } from 'react-firebase-hooks/auth'
 import firebase from 'firebase/app' 
 import 'firebase/auth'
-import { useAuthState } from 'react-firebase-hooks/auth'
+import firebaseConfig from '../firebase'
 
 const auth = firebase.auth()
 
