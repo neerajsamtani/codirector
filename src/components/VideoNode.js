@@ -2,7 +2,7 @@ import React, { memo, useState } from 'react';
 
 import { Handle } from 'react-flow-renderer';
 
-export default memo(({ id, data }) => {
+export default ({ id, data }) => {
 
   const [link, setLink] = useState(data.value)
   const [thumbnail, setThumbnail] = useState(<div>{data.label}</div>)
@@ -48,4 +48,4 @@ export default memo(({ id, data }) => {
       <Handle type="source" position="right" id="a" style={{ background: '#555' }} />
     </>
   );
-})
+}

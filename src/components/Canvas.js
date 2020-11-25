@@ -30,37 +30,63 @@ const nodeTypes = {
 const Canvas = () => {
   
   const [elements, setElements] = useState([]);
-  const [nextId, setNextId] = useState(3);
+  const [nextId, setNextId] = useState(0);
 
   // Get elements from Firebase
   const hook = () => {
     database.ref('/projects/' + projectId + "/elements").once('value')
-      .then(snapshot => setElements(snapshot.val()))
+      .then(snapshot => {
+        var initialElements = []
+        for (const element in snapshot.val()) {
+          initialElements.push(snapshot.val()[element])
+        }
+        setElements(initialElements)
+        setNextId(initialElements.length + 1)
+      })
   }
   useEffect(hook, [])
 
-  const handleVideoChange = (id, event) => {
+  var handleVideoChange = (id, event) => {
     // console.log("HANDLE VIDEO NODE ", id, " CHANGE", event.target.value)
+
+    // const node = elements.find(n => n.id === id)
+    // const updatedNode = {
+    //   ...node,
+    //   data: {
+    //     ...node.data,
+    //     value: event.target.value
+    //   }
+    // }
+    // setElements(els => 
+    //   els.map(e => e.id === id ? updatedNode : e)
+    // )
+
+    // var updates = {}
+
     setElements(els => 
       els.map(e => {
         if (e.id === id) {
-          return {
+          const updatedNode = {
             ...e,
             data: {
               ...e.data,
               value: event.target.value
             }
           }
+          // updates["/projects/" + projectId + "/elements/" + (id - 1)] = updatedNode
+          return updatedNode
         }
         else {
           return e
         }
       })
     )
+    // .then(database.ref().update(updates))
   }
 
-  const handleQuestionChange = (id, event) => {
+  var handleQuestionChange = (id, event) => {
     // console.log("HANDLE QUESTION NODE ", id, " CHANGE", event.target.value)
+
     setElements(els => 
       els.map(e => {
         if (e.id === id) {
@@ -85,13 +111,17 @@ const Canvas = () => {
       type: 'videoNode',
       style: { border: '1px solid #777', padding: 10, background: '#FFF' },
       data: {
-          label: (<>NEW <strong>VIDEO</strong> NODE </>),
+          label: "(<>NEW <strong>VIDEO</strong> NODE </>)",
           value: '',
-          onChange: handleVideoChange,
+          onChange: "handleVideoChange"
       },
-      position: { x: 0, y: 0 },
+      position: { x: 0, y: 0 }
     }
-    setElements(elements.concat(newVideoNode));
+
+    const newVideoNodeJSON = JSON.parse(JSON.stringify(newVideoNode))
+    database.ref('projects/' + projectId + "/elements").push(newVideoNodeJSON)
+
+    setElements(elements.concat(newVideoNode))
     setNextId(nextId + 1)
   }
 
@@ -101,12 +131,16 @@ const Canvas = () => {
       type: 'questionNode',
       style: { border: '1px solid #777', padding: 10, background: '#FFF' },
       data: {
-          label: (<>NEW <strong>QUESTION</strong> NODE</>),
+          label: "(<>NEW <strong>QUESTION</strong> NODE</>)",
           value:'',
-          onChange: handleQuestionChange,
+          onChange: "handleQuestionChange",
       },
       position: { x: 0, y: 0 },
       }
+    
+    const newQuestionNodeJSON = JSON.parse(JSON.stringify(newQuestionNode))
+    database.ref('projects/' + projectId + "/elements").push(newQuestionNodeJSON)
+
     setElements(elements.concat(newQuestionNode))
     setNextId(nextId + 1)
   }

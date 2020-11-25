@@ -1,7 +1,7 @@
 import React, { memo, useState } from 'react';
 import { Handle } from 'react-flow-renderer';
 
-export default memo(({ id, data }) => {
+export default ({ id, data }) => {
 
   // TODO: Only allow one outgoing connection per answer
   // TODO: Allow multiple answers
@@ -32,4 +32,4 @@ export default memo(({ id, data }) => {
       <Handle type="source" position="right" id="a" style={{ background: '#555' }} />
     </>
   );
-})
+}
