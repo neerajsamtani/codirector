@@ -12,11 +12,14 @@ const database = firebase.database()
 
 export {database}
 
-// TODO: Do I need to listen for events to update local state? Yes, if multiple people are collaborating. Not for MVP
+// TODO: Do I need to listen for events to update local state? Yes, if multiple people are collaborating. 
+// Yes, when making changes directly on firebase and seeing hot reloading. Not for MVP
 // TODO: Add custom nodes to minimap
 // TODO: Fix Styles
 // TODO: BUG FIX: Fix ID Discrepancy between nextId on Firebase. An element's id changes on first interaction. 
+// BUG caused by the fact that we re-write the entire elements array onMove, onConnect, onRemove
 // TODO: Allow to select project
+// TODO: fix bug where buttons disappear when screen is too small
 const projectId = "WeLImpeRjuSEThIeRNIC"
 
 const onLoad = (reactFlowInstance) => {
@@ -51,61 +54,6 @@ const Canvas = () => {
       })
   }
   useEffect(hook, [])
-
-  var handleVideoChange = (id, event) => {
-    // console.log("HANDLE VIDEO NODE ", id, " CHANGE", event.target.value)
-
-    // const node = elements.find(n => n.id === id)
-    // const updatedNode = {
-    //   ...node,
-    //   data: {
-    //     ...node.data,
-    //     value: event.target.value
-    //   }
-    // }
-    // setElements(els => 
-    //   els.map(e => e.id === id ? updatedNode : e)
-    // )
-
-    setElements(els => 
-      els.map(e => {
-        if (e.id === id) {
-          const updatedNode = {
-            ...e,
-            data: {
-              ...e.data,
-              value: event.target.value
-            }
-          }
-          return updatedNode
-        }
-        else {
-          return e
-        }
-      })
-    )
-  }
-
-  var handleQuestionChange = (id, event) => {
-    // console.log("HANDLE QUESTION NODE ", id, " CHANGE", event.target.value)
-
-    setElements(els => 
-      els.map(e => {
-        if (e.id === id) {
-          return {
-            ...e,
-            data: {
-              ...e.data,
-              value: event.target.value
-            }
-          }
-        }
-        else {
-          return e
-        }
-      })
-    )
-  }
 
   const addVideoNode = () => {
     const newVideoNode = {
@@ -149,21 +97,29 @@ const Canvas = () => {
     .then(setNextId(nextId + 1))
   }
 
-  const onElementsRemove = (elementsToRemove) => 
-    setElements((els) => {
-      const updatedElements = removeElements(elementsToRemove, els)
-      database.ref('projects/' + projectId + "/elements").set(updatedElements)
-      return updatedElements
-    });
+  // TODO: BUG FIX: Don't replace all elements, delete the appropriate ones from the database
+  const onElementsRemove = (elementsToRemove) => {
 
-  const onConnect = (params) => 
-    setElements((els) => {
-      const updatedElements = addEdge(params, els)
-      database.ref('projects/' + projectId + "/elements").set(updatedElements)
-      database.ref('projects/' + projectId + "/nextId").set(nextId + 1)
+    const elementsToRemoveIds = elementsToRemove.map(e => e.id)
+    console.log(elementsToRemove)
+
+    var deletions = {}
+    for (const elementId in elementsToRemoveIds) {
+      deletions['projects/' + projectId + "/elements/" + (elementId-1)] = null
+    }
+    // console.log(deletions)
+    // database.ref().update(updates)
+    //   .then(setElements(elements.filter(element => !elementsToRemoveIds.includes(element.id))))
+  }
+
+  const onConnect = (params) => {
+    const updatedElements = addEdge(params, elements)
+    const newEdge = updatedElements[updatedElements.length - 1]
+    database.ref('projects/' + projectId + "/elements/" + (nextId - 1)).set(newEdge)
+      .then(setElements(elements.concat(newEdge)))
+    database.ref('projects/' + projectId + "/nextId").set(nextId + 1)
       .then(setNextId(nextId + 1))
-      return updatedElements
-  });
+  }
 
   const onNodeDragStop = (event, node) => {
     // The node parameter here doesn't have all the data from oldNode
@@ -172,11 +128,10 @@ const Canvas = () => {
       ...oldNode,
       position: node.position
     }
-    setElements(els => {
-      const updatedElements = els.map(e => e.id === node.id ? updatedNode : e )
-      database.ref('projects/' + projectId + "/elements").set(updatedElements)
-      return updatedElements
-    })
+    database.ref('projects/' + projectId + "/elements/" + (node.id-1) + "/position/").set(node.position)
+      .then(
+        setElements(els => els.map(e => e.id === node.id ? updatedNode : e ))
+        )
   }
 
   return (
