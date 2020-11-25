@@ -14,13 +14,12 @@ const database = firebase.database()
 const projectId = "WeLImpeRjuSEThIeRNIC"
 
 // TODO: Add custom nodes to minimap
+// TODO: Fix Styles
 
 const onLoad = (reactFlowInstance) => {
   console.log('flow loaded:', reactFlowInstance);
   reactFlowInstance.fitView();
 };
-
-const connectionLineStyle = { stroke: '#ddd' };
 
 const nodeTypes = {
   videoNode: VideoNode,
@@ -38,10 +37,16 @@ const Canvas = () => {
       .then(snapshot => {
         var initialElements = []
         for (const element in snapshot.val()) {
-          initialElements.push(snapshot.val()[element])
+          var currentElement = snapshot.val()[element]
+          initialElements.push(currentElement)
         }
         setElements(initialElements)
-        setNextId(initialElements.length + 1)
+        // TODO: Store Next ID on Firebase to prevent overlap
+        // TODO: MOST IMP: Sync question/video node input text with Firebase
+      })
+    database.ref('/projects/' + projectId + "/nextId").once('value')
+      .then(snapshot => {
+        setNextId(snapshot.val())
       })
   }
   useEffect(hook, [])
@@ -61,8 +66,6 @@ const Canvas = () => {
     //   els.map(e => e.id === id ? updatedNode : e)
     // )
 
-    // var updates = {}
-
     setElements(els => 
       els.map(e => {
         if (e.id === id) {
@@ -73,7 +76,6 @@ const Canvas = () => {
               value: event.target.value
             }
           }
-          // updates["/projects/" + projectId + "/elements/" + (id - 1)] = updatedNode
           return updatedNode
         }
         else {
@@ -81,7 +83,6 @@ const Canvas = () => {
         }
       })
     )
-    // .then(database.ref().update(updates))
   }
 
   var handleQuestionChange = (id, event) => {
@@ -111,7 +112,7 @@ const Canvas = () => {
       type: 'videoNode',
       style: { border: '1px solid #777', padding: 10, background: '#FFF' },
       data: {
-          label: "(<>NEW <strong>VIDEO</strong> NODE </>)",
+          label: "NEW <strong>VIDEO</strong> NODE",
           value: '',
           onChange: "handleVideoChange"
       },
@@ -120,6 +121,7 @@ const Canvas = () => {
 
     const newVideoNodeJSON = JSON.parse(JSON.stringify(newVideoNode))
     database.ref('projects/' + projectId + "/elements/" + (nextId - 1)).set(newVideoNodeJSON)
+    database.ref('projects/' + projectId + "/nextId").set(nextId + 1)
 
     setElements(elements.concat(newVideoNode))
     setNextId(nextId + 1)
@@ -131,7 +133,7 @@ const Canvas = () => {
       type: 'questionNode',
       style: { border: '1px solid #777', padding: 10, background: '#FFF' },
       data: {
-          label: "(<>NEW <strong>QUESTION</strong> NODE</>)",
+          label: "NEW <strong>QUESTION</strong> NODE",
           value:'',
           onChange: "handleQuestionChange",
       },
@@ -140,6 +142,7 @@ const Canvas = () => {
     
     const newQuestionNodeJSON = JSON.parse(JSON.stringify(newQuestionNode))
     database.ref('projects/' + projectId + "/elements/" + (nextId - 1)).set(newQuestionNodeJSON)
+    database.ref('projects/' + projectId + "/nextId").set(nextId + 1)
 
     setElements(elements.concat(newQuestionNode))
     setNextId(nextId + 1)
@@ -176,7 +179,7 @@ const Canvas = () => {
       onConnect={onConnect}
       onLoad={onLoad}
       onNodeDragStop={onNodeDragStop}
-      connectionLineStyle={connectionLineStyle}
+      connectionLineStyle={{ stroke: '#ddd' }}
       nodeTypes={nodeTypes}
     >
       <MiniMap

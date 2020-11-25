@@ -1,11 +1,10 @@
 import React, { memo, useState } from 'react';
-
 import { Handle } from 'react-flow-renderer';
-
+import parse from 'html-react-parser'
 export default ({ id, data }) => {
 
   const [link, setLink] = useState(data.value)
-  const [thumbnail, setThumbnail] = useState(<div>{data.label}</div>)
+  const [thumbnail, setThumbnail] = useState('')
 
   // TODO: Validate link to get video
   // TODO: Only allow one outgoing connection per video
@@ -25,27 +24,34 @@ export default ({ id, data }) => {
   }
 
   const handleLinkChange = (event) => {
-    data.onChange(id, event)
+    // data.onChange(id, event)
     setLink(event.target.value)
   }
 
   return (
     <>
-      <Handle
+    <Handle
+        id="b"
         type="target"
         position="left"
         style={{ background: '#555' }}
-        onConnect={(params) => console.log('handle onConnect', params)}
       />
       {thumbnail}
       <form onSubmit={getThumbnail}>
+      {parse(data.label)}
+      <br />
         <input 
           value={link}
           onChange={handleLinkChange}
         />
         {/* <button type="submit">Submit</button> */}
       </form>
-      <Handle type="source" position="right" id="a" style={{ background: '#555' }} />
+      <Handle 
+        type="source" 
+        position="right" 
+        id="a"
+        style={{ background: '#555' }} 
+      />
     </>
   );
 }
