@@ -2,9 +2,9 @@ import React, { memo, useState } from 'react';
 
 import { Handle } from 'react-flow-renderer';
 
-export default memo(({ data }) => {
+export default memo(({ id, data }) => {
 
-  const [link, setLink] = useState('')
+  const [link, setLink] = useState(data.value)
   const [thumbnail, setThumbnail] = useState(<div>{data.label}</div>)
 
   // TODO: Validate link to get video
@@ -25,6 +25,7 @@ export default memo(({ data }) => {
   }
 
   const handleLinkChange = (event) => {
+    data.onChange(id, event)
     setLink(event.target.value)
   }
 
@@ -47,4 +48,4 @@ export default memo(({ data }) => {
       <Handle type="source" position="right" id="a" style={{ background: '#555' }} />
     </>
   );
-});
+})

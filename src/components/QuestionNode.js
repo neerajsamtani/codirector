@@ -1,14 +1,15 @@
 import React, { memo, useState } from 'react';
 import { Handle } from 'react-flow-renderer';
 
-export default memo(({ data }) => {
+export default memo(({ id, data }) => {
 
   // TODO: Only allow one outgoing connection per answer
   // TODO: Allow multiple answers
-  const [question, setQuestion] = useState('')
-  const [answers, setAnswers] = useState([])
+  const [question, setQuestion] = useState(data.value)
+  // const [answers, setAnswers] = useState([])
 
   const handleQuestionChange = (event) => {
+    data.onChange(id, event)
     setQuestion(event.target.value)
   }
 
@@ -31,4 +32,4 @@ export default memo(({ data }) => {
       <Handle type="source" position="right" id="a" style={{ background: '#555' }} />
     </>
   );
-});
+})

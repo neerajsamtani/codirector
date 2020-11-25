@@ -6,7 +6,6 @@ import Buttons from './Buttons'
 import firebase from 'firebase/app'
 import 'firebase/database'
 import firebaseConfig from '../firebase'
-import { useList } from 'react-firebase-hooks/database'
 
 firebase.initializeApp(firebaseConfig)
 const database = firebase.database()
@@ -40,6 +39,46 @@ const Canvas = () => {
   }
   useEffect(hook, [])
 
+  const handleVideoChange = (id, event) => {
+    // console.log("HANDLE VIDEO NODE ", id, " CHANGE", event.target.value)
+    setElements(els => 
+      els.map(e => {
+        if (e.id === id) {
+          return {
+            ...e,
+            data: {
+              ...e.data,
+              value: event.target.value
+            }
+          }
+        }
+        else {
+          return e
+        }
+      })
+    )
+  }
+
+  const handleQuestionChange = (id, event) => {
+    // console.log("HANDLE QUESTION NODE ", id, " CHANGE", event.target.value)
+    setElements(els => 
+      els.map(e => {
+        if (e.id === id) {
+          return {
+            ...e,
+            data: {
+              ...e.data,
+              value: event.target.value
+            }
+          }
+        }
+        else {
+          return e
+        }
+      })
+    )
+  }
+
   const addVideoNode = () => {
     const newVideoNode = {
       id: `${nextId}`,
@@ -47,6 +86,8 @@ const Canvas = () => {
       style: { border: '1px solid #777', padding: 10, background: '#FFF' },
       data: {
           label: (<>NEW <strong>VIDEO</strong> NODE </>),
+          value: '',
+          onChange: handleVideoChange,
       },
       position: { x: 0, y: 0 },
     }
@@ -61,6 +102,8 @@ const Canvas = () => {
       style: { border: '1px solid #777', padding: 10, background: '#FFF' },
       data: {
           label: (<>NEW <strong>QUESTION</strong> NODE</>),
+          value:'',
+          onChange: handleQuestionChange,
       },
       position: { x: 0, y: 0 },
       }
