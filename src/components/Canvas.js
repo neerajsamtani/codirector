@@ -119,7 +119,7 @@ const Canvas = () => {
     }
 
     const newVideoNodeJSON = JSON.parse(JSON.stringify(newVideoNode))
-    database.ref('projects/' + projectId + "/elements").push(newVideoNodeJSON)
+    database.ref('projects/' + projectId + "/elements/" + (nextId - 1)).set(newVideoNodeJSON)
 
     setElements(elements.concat(newVideoNode))
     setNextId(nextId + 1)
@@ -139,14 +139,20 @@ const Canvas = () => {
       }
     
     const newQuestionNodeJSON = JSON.parse(JSON.stringify(newQuestionNode))
-    database.ref('projects/' + projectId + "/elements").push(newQuestionNodeJSON)
+    database.ref('projects/' + projectId + "/elements/" + (nextId - 1)).set(newQuestionNodeJSON)
 
     setElements(elements.concat(newQuestionNode))
     setNextId(nextId + 1)
   }
 
   const onElementsRemove = (elementsToRemove) => setElements((els) => removeElements(elementsToRemove, els));
-  const onConnect = (params) => setElements((els) => addEdge(params, els));
+
+  const onConnect = (params) => 
+    setElements((els) => {
+      const updatedElements = addEdge(params, els)
+      database.ref('projects/' + projectId + "/elements").set(updatedElements)
+      return updatedElements
+  });
 
   return (
     <>
