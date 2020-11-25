@@ -145,7 +145,12 @@ const Canvas = () => {
     setNextId(nextId + 1)
   }
 
-  const onElementsRemove = (elementsToRemove) => setElements((els) => removeElements(elementsToRemove, els));
+  const onElementsRemove = (elementsToRemove) => 
+    setElements((els) => {
+      const updatedElements = removeElements(elementsToRemove, els)
+      database.ref('projects/' + projectId + "/elements").set(updatedElements)
+      return updatedElements
+    });
 
   const onConnect = (params) => 
     setElements((els) => {
