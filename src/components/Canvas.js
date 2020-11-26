@@ -61,7 +61,7 @@ const Canvas = () => {
       type: 'videoNode',
       style: { border: '1px solid #777', padding: 10, background: '#FFF' },
       data: {
-          label: "NEW <strong>VIDEO</strong> NODE",
+          label: "<strong>VIDEO</strong> NODE",
           value: '',
           onChange: "handleVideoChange"
       },
@@ -82,8 +82,10 @@ const Canvas = () => {
       type: 'questionNode',
       style: { border: '1px solid #777', padding: 10, background: '#FFF' },
       data: {
-          label: "NEW <strong>QUESTION</strong> NODE",
-          value:'',
+          label: "<strong>QUESTION</strong> NODE",
+          question:'',
+          answer1:'',
+          answer2:'',
           onChange: "handleQuestionChange",
       },
       position: { x: 0, y: 0 },

@@ -38,7 +38,6 @@ export default ({ id, data }) => {
   return (
     <>
     <Handle
-        id="b"
         type="target"
         position="left"
         style={{ background: '#555' }}
@@ -50,13 +49,13 @@ export default ({ id, data }) => {
         <input 
           value={link}
           onChange={handleLinkChange}
+          placeholder="Youtube Video Link"
         />
         {/* <button type="submit">Submit</button> */}
       </form>
       <Handle 
         type="source" 
-        position="right" 
-        id="a"
+        position="right"
         style={{ background: '#555' }} 
       />
     </>
