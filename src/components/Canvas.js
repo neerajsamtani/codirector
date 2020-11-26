@@ -62,9 +62,8 @@ const Canvas = () => {
       style: { border: '1px solid #777', padding: 10, background: '#FFF' },
       data: {
           label: "<strong>VIDEO</strong> NODE",
-          value: '',
+          link: '',
           thumbnail: '',
-          onChange: "handleVideoChange"
       },
       position: { x: 0, y: 0 }
     }
@@ -87,7 +86,6 @@ const Canvas = () => {
           question:'',
           option1:'',
           option2:'',
-          onChange: "handleQuestionChange",
       },
       position: { x: 0, y: 0 },
       }
@@ -100,24 +98,26 @@ const Canvas = () => {
     .then(setNextId(nextId + 1))
   }
 
-  // TODO: BUG FIX: Don't replace all elements, delete the appropriate ones from the database
   const onElementsRemove = (elementsToRemove) => {
 
     const elementsToRemoveIds = elementsToRemove.map(e => e.id)
-    console.log(elementsToRemove)
 
     var deletions = {}
-    for (const elementId in elementsToRemoveIds) {
+    for (const elementId of elementsToRemoveIds) {
       deletions['projects/' + projectId + "/elements/" + (elementId-1)] = null
     }
-    // console.log(deletions)
-    // database.ref().update(updates)
-    //   .then(setElements(elements.filter(element => !elementsToRemoveIds.includes(element.id))))
+
+    database.ref().update(deletions)
+      .then(setElements(elements.filter(element => !elementsToRemoveIds.includes(element.id))))
   }
 
   const onConnect = (params) => {
     const updatedElements = addEdge(params, elements)
-    const newEdge = updatedElements[updatedElements.length - 1]
+    var newEdge = updatedElements[updatedElements.length - 1]
+    newEdge = {
+      ...newEdge,
+      id: `${nextId}`
+    }
     database.ref('projects/' + projectId + "/elements/" + (nextId - 1)).set(newEdge)
       .then(setElements(elements.concat(newEdge)))
     database.ref('projects/' + projectId + "/nextId").set(nextId + 1)

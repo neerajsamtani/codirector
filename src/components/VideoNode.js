@@ -9,7 +9,7 @@ const projectId = "WeLImpeRjuSEThIeRNIC"
 
 export default ({ id, data }) => {
 
-  const [link, setLink] = useState(data.value)
+  const [link, setLink] = useState(data.link)
   const [thumbnail, setThumbnail] = useState(data.thumbnail)
 
   // TODO: Validate link to get video
@@ -29,7 +29,7 @@ export default ({ id, data }) => {
       // Empty out Thumbnail and Link and alert user
       database.ref('projects/' + projectId + "/elements/" + (id-1) + "/data/thumbnail/").set("")
         .then(setThumbnail(""))
-      database.ref('projects/' + projectId + "/elements/" + (id-1) + "/data/value/").set("")
+      database.ref('projects/' + projectId + "/elements/" + (id-1) + "/data/link/").set("")
         .then(setLink(""))
       alert("Please enter a valid youtube link.")
     }
@@ -37,7 +37,7 @@ export default ({ id, data }) => {
 
   const handleLinkChange = (event) => {
     // TODO: Update elements array
-    database.ref('projects/' + projectId + "/elements/" + (id-1) + "/data/value/").set(event.target.value)
+    database.ref('projects/' + projectId + "/elements/" + (id-1) + "/data/link/").set(event.target.value)
     .then(setLink(event.target.value))
   }
 
