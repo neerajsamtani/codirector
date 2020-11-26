@@ -1,5 +1,6 @@
 import React from 'react'
 import Header from './Header'
+import Watch from './Watch'
 import Canvas from './Canvas';
 import { useAuthState } from 'react-firebase-hooks/auth'
 import firebase from 'firebase/app' 
@@ -37,13 +38,12 @@ const App = () => {
     //         email: currentUser.email,
     //         profile_picture : currentUser.photoURL,
     //       })        
-    //     console.log("Added user")
     // }
 
     return(
         <>
             <Header SignIn={SignIn} SignOut={SignOut} user={user} />
-            { user ? <Canvas /> : null }
+            { user ? <Canvas projectId="WeLImpeRjuSEThIeRNIC" /> : <Watch /> }
         </>
     )
 }

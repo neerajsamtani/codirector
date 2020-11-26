@@ -16,11 +16,8 @@ export {database}
 // Yes, when making changes directly on firebase and seeing hot reloading. Not for MVP
 // TODO: Add custom nodes to minimap
 // TODO: Fix Styles
-// TODO: BUG FIX: Fix ID Discrepancy between nextId on Firebase. An element's id changes on first interaction. 
-// BUG caused by the fact that we re-write the entire elements array onMove, onConnect, onRemove
 // TODO: Allow to select project
 // TODO: fix bug where buttons disappear when screen is too small
-const projectId = "WeLImpeRjuSEThIeRNIC"
 
 const onLoad = (reactFlowInstance) => {
   console.log('flow loaded:', reactFlowInstance);
@@ -32,7 +29,7 @@ const nodeTypes = {
   questionNode: QuestionNode,
 };
 
-const Canvas = () => {
+const Canvas = ({ projectId }) => {
   
   const [elements, setElements] = useState([]);
   const [nextId, setNextId] = useState(0);
