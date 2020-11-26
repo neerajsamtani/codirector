@@ -16,8 +16,8 @@ export default ({ id, data, style }) => {
   // TODO: Improve Styling
 
   const [question, setQuestion] = useState(data.question)
-  const [answer1, setAnswer1] = useState(data.answer1)
-  const [answer2, setAnswer2] = useState(data.answer2)
+  const [option1, setOption1] = useState(data.option1)
+  const [option2, setOption2] = useState(data.option2)
 
   const handleQuestionChange = (event) => {
     // TODO: Update elements array
@@ -25,16 +25,16 @@ export default ({ id, data, style }) => {
     .then(setQuestion(event.target.value))
   }
 
-  const handleAnswer1Change = (event) => {
+  const handleOption1Change = (event) => {
     // TODO: Update elements array
-    database.ref('projects/' + projectId + "/elements/" + (id-1) + "/data/answer1/").set(event.target.value)
-    .then(setAnswer1(event.target.value))
+    database.ref('projects/' + projectId + "/elements/" + (id-1) + "/data/option1/").set(event.target.value)
+    .then(setOption1(event.target.value))
   }
 
-  const handleAnswer2Change = (event) => {
+  const handleOption2Change = (event) => {
     // TODO: Update elements array
-    database.ref('projects/' + projectId + "/elements/" + (id-1) + "/data/answer2/").set(event.target.value)
-    .then(setAnswer2(event.target.value))
+    database.ref('projects/' + projectId + "/elements/" + (id-1) + "/data/option2/").set(event.target.value)
+    .then(setOption2(event.target.value))
   }
 
   return (
@@ -56,16 +56,16 @@ export default ({ id, data, style }) => {
         <br />
         <br />
         <input 
-          value={answer1}
+          value={option1}
           placeholder="Option 1"
-          onChange={handleAnswer1Change}
+          onChange={handleOption1Change}
         />
         <br />
         <br />
         <input 
-          value={answer2}
+          value={option2}
           placeholder="Option 2"
-          onChange={handleAnswer2Change}
+          onChange={handleOption2Change}
         />
         <br />
       <br />
@@ -73,13 +73,13 @@ export default ({ id, data, style }) => {
       <Handle 
         type="source" 
         position="right" 
-        id="a"
+        id="answer1"
         style={{ bottom: 70, top: 'auto', background: '#555' }} 
       />
       <Handle 
         type="source" 
         position="right" 
-        id="b"
+        id="answer2"
         style={{ bottom: 30, top: 'auto', background: '#555' }}
       />
     </>

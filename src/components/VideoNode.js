@@ -10,7 +10,7 @@ const projectId = "WeLImpeRjuSEThIeRNIC"
 export default ({ id, data }) => {
 
   const [link, setLink] = useState(data.value)
-  const [thumbnail, setThumbnail] = useState('')
+  const [thumbnail, setThumbnail] = useState(data.thumbnail)
 
   // TODO: Validate link to get video
   // TODO: Only allow one outgoing connection per video
@@ -20,11 +20,17 @@ export default ({ id, data }) => {
     const videoIdArray = link.match(VID_REGEX) // videoId is element [1] of this array
     if (videoIdArray) {
       const videoId = `https://img.youtube.com/vi/${videoIdArray[1]}/mqdefault.jpg`
-      setThumbnail(<img draggable="false" src={videoId} width="192" height="108" />)
+      const newThumbnail = `<img draggable='false' src=${videoId} width='192' height='108' />`
+      database.ref('projects/' + projectId + "/elements/" + (id-1) + "/data/thumbnail/").set(newThumbnail)
+      .then(setThumbnail(newThumbnail))
     }
     else {
-      setThumbnail(`Video Node`)
-      setLink(``)
+      // Invalid Link
+      // Empty out Thumbnail and Link and alert user
+      database.ref('projects/' + projectId + "/elements/" + (id-1) + "/data/thumbnail/").set("")
+        .then(setThumbnail(""))
+      database.ref('projects/' + projectId + "/elements/" + (id-1) + "/data/value/").set("")
+        .then(setLink(""))
       alert("Please enter a valid youtube link.")
     }
   }
@@ -42,9 +48,10 @@ export default ({ id, data }) => {
         position="left"
         style={{ background: '#555' }}
       />
-      {thumbnail}
       <form onSubmit={getThumbnail}>
       {parse(data.label)}
+      <br />
+      {parse(thumbnail)}
       <br />
         <input 
           value={link}

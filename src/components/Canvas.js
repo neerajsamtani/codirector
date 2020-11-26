@@ -63,6 +63,7 @@ const Canvas = () => {
       data: {
           label: "<strong>VIDEO</strong> NODE",
           value: '',
+          thumbnail: '',
           onChange: "handleVideoChange"
       },
       position: { x: 0, y: 0 }
@@ -84,8 +85,8 @@ const Canvas = () => {
       data: {
           label: "<strong>QUESTION</strong> NODE",
           question:'',
-          answer1:'',
-          answer2:'',
+          option1:'',
+          option2:'',
           onChange: "handleQuestionChange",
       },
       position: { x: 0, y: 0 },
