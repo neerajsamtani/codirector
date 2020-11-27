@@ -3,7 +3,8 @@ import { Link, Switch, Route, Redirect, useRouteMatch } from 'react-router-dom'
 import Header from './Header'
 import Home from './Home'
 import Watch from './Watch'
-import Canvas from './Canvas';
+import Canvas from './Canvas'
+import Projects from './Projects'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import firebase from 'firebase/app'
 import 'firebase/auth'
@@ -59,6 +60,9 @@ const App = () => {
                 } />
                 <Route path="/watch/:projectId">
                     <Watch projectId={watchProjectId} />
+                </Route>
+                <Route path="/projects">
+                    <Projects user={user} />
                 </Route>
                 <Route path="/">
                     <Home />

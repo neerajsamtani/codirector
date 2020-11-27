@@ -15,7 +15,7 @@ const Home = () => {
     }
 
     return (
-        <div class="main">
+        <div className="main">
             <form onSubmit={handleFormSubmit}>
                 <input
                     id="searchbox"
