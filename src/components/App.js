@@ -29,8 +29,12 @@ const SignOut = () => {
 
 const App = () => {
     const [user] = useAuthState(auth)
-    const match = useRouteMatch('/watch/:projectId')
-    const projectId = match ? match.params.projectId : null
+
+    const watchMatch = useRouteMatch('/watch/:projectId')
+    const watchProjectId = watchMatch ? watchMatch.params.projectId : null
+
+    const canvasMatch = useRouteMatch('/canvas/:projectId')
+    const canvasProjectId = canvasMatch ? canvasMatch.params.projectId : null
 
     // TODO: Add user as database entry
     // if (user != null) {
@@ -44,19 +48,17 @@ const App = () => {
     //       })        
     // }
 
-    const padding = {
-        padding: 5
-    }
     // TODO: Rename canvas to create
+    // TODO: Only allow navigation to canvas if logged in
     return (
         <>
             <Header SignIn={SignIn} SignOut={SignOut} user={user} />
             <Switch>
-                <Route path="/canvas" render={() =>
-                    user ? <Canvas projectId="WeLImpeRjuSEThIeRNIC" /> : <Redirect to="/" />
+                <Route path="/canvas/:projectId" render={() =>
+                    <Canvas projectId={canvasProjectId} />
                 } />
                 <Route path="/watch/:projectId">
-                    <Watch projectId={projectId} />
+                    <Watch projectId={watchProjectId} />
                 </Route>
                 <Route path="/">
                     <Home />

@@ -19,7 +19,7 @@ const Home = () => {
             <form onSubmit={handleFormSubmit}>
                 <input
                     id="searchbox"
-                    placeholder="Film ID"
+                    placeholder="Enter Film ID"
                     value={projectId}
                     onChange={handleProjectIdChange}
                 />
