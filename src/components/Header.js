@@ -1,14 +1,14 @@
-// import react from 'react'
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Header = ({ SignIn, SignOut, user }) => {
-    return (
-      <header>
-        <a className="logo" href="https://github.com/neerajsamtani/codirector">
-          codirector
-        </a>
-        { user ? <SignOut /> : <SignIn /> }
-      </header>
-    );
-  };
+  return (
+    <header>
+      <Link to="/" className="logo">codirector</Link>
+      {user ? <Link className="right-button" to="/canvas">canvas</Link> : null}
+      {user ? <SignOut /> : <SignIn />}
+    </header>
+  );
+};
 
 export default Header

@@ -17,13 +17,13 @@ const SignIn = () => {
         auth.signInWithPopup(provider)
     }
     return (
-        <button className="auth-button" onClick={signInWithGoogle}>Sign in with Google</button>
+        <button className="right-button" onClick={signInWithGoogle}>Sign in with Google</button>
     )
 }
 
 const SignOut = () => {
     return auth.currentUser && (
-        <button className="auth-button" onClick={() => auth.signOut()} >Sign Out</button>
+        <button className="right-button" onClick={() => auth.signOut()} >Sign Out</button>
     )
 }
 
@@ -51,10 +51,6 @@ const App = () => {
     return (
         <>
             <Header SignIn={SignIn} SignOut={SignOut} user={user} />
-            <div>
-                <Link style={padding} to="/">home</Link>
-                <Link style={padding} to="/canvas">canvas</Link>
-            </div>
             <Switch>
                 <Route path="/canvas" render={() =>
                     user ? <Canvas projectId="WeLImpeRjuSEThIeRNIC" /> : <Redirect to="/" />
