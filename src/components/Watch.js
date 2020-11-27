@@ -1,45 +1,38 @@
 import React, { useState, useEffect } from 'react'
 import firebase from 'firebase/app'
 import firebaseConfig from '../firebase'
-import {database} from './Canvas'
+import { database } from './Canvas'
 
-const Watch = () => {
+const Watch = ({ projectId }) => {
 
-    const [projectId, setProjectId] = useState("")
     const [graph, setGraph] = useState([])
+    const [error, setError] = useState("")
 
-
-    const handleProjectIdChange = (event) => {
-        setProjectId(event.target.value)
-    }
-
-    const getGraph = (event) => {
-        event.preventDefault()
+    const getGraph = () => {
         database.ref('/projects/' + projectId).once('value')
-        .then(snapshot => {
-            var initialGraph = []
-            var elements = snapshot.val().elements
-            for (const currentElement of elements) {
-                if (currentElement) {
-                    initialGraph.push(currentElement)
+            .then(snapshot => {
+                var initialGraph = []
+                if (snapshot.val()) {
+                    var elements = snapshot.val().elements
+                    for (const currentElement of elements) {
+                        if (currentElement) {
+                            initialGraph.push(currentElement)
+                        }
+                    }
+                    setGraph(initialGraph)
+                } else {
+                    setError("Film not found")
                 }
-            }
-            setGraph(initialGraph)
-        })
+                
+            })
     }
+    useEffect(getGraph, [])
 
-    return(
+    return (
         <div>
-            <p>Watch a movie</p>
+            <p>Watch this movie</p>
+            {error}
             {console.log(graph)}
-            <form onSubmit={event => getGraph(event)}>
-                <input 
-                    placeholder="Film ID"
-                    value={projectId}
-                    onChange={handleProjectIdChange}
-                    />
-            </form>
-            <p>Example Movie: WeLImpeRjuSEThIeRNIC</p>
         </div>
     )
 }
