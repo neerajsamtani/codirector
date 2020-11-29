@@ -7,11 +7,14 @@ const Watch = ({ projectId }) => {
 
     const [error, setError] = useState("")
     const [graph, setGraph] = useState([])
-    const [graphIndex, setGraphIndex] = useState(0)
-    const [currentDisplay, setCurrentDisplay] = useState([])
+    const [currentDisplay, setCurrentDiplay] = useState("")
 
-    const incrementGraphIndex = () => {
-        setGraphIndex(graphIndex+1)
+    const nextGraphIndex = () => {
+        // setGraphIndex(graphIndex+1)
+        // console.log()
+        const edge = graph.find(element => element.source && element.source === currentDisplay.id)
+        const nextNode = graph.find(element => element.id === edge.target)
+        setCurrentDiplay(nextNode)
     }
 
 
@@ -27,7 +30,7 @@ const Watch = ({ projectId }) => {
                         }
                     }
                     setGraph(initialGraph)
-                    setCurrentDisplay(initialGraph[graphIndex])
+                    setCurrentDiplay(initialGraph[0]) // TODO: Create a START and END function
                 } else {
                     setError("Film not found")
                 }
@@ -41,9 +44,9 @@ const Watch = ({ projectId }) => {
             <p>Watch this movie</p>
             {error}
             {/* {console.log(graph)} */}
-            <button onClick={incrementGraphIndex} >Next</button>
-            {graph && graph[graphIndex] ? <p>{JSON.stringify(graph[graphIndex])}</p> : null}
-            {/* graph[graphIndex].data.label */}
+            <button onClick={nextGraphIndex} >Next</button>
+            {currentDisplay ? <p>{JSON.stringify(currentDisplay)}</p> : null}
+            {console.log(currentDisplay)}
         </div>
     )
 }
