@@ -23,7 +23,7 @@ const Home = () => {
                     value={projectId}
                     onChange={handleProjectIdChange}
                 />
-                <button type="submit" class="button" >Watch</button>
+                <button type="submit" className="button" >Watch</button>
             </form>
             <p>Example Movie: WeLImpeRjuSEThIeRNIC</p>
         </div>
