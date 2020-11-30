@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import firebase from 'firebase/app'
 import firebaseConfig from '../firebase'
 import { database } from './Canvas'
+import MoonLoader from "react-spinners/MoonLoader";
 
 // TODO: Use this to play videos: https://github.com/CookPete/react-player
 
@@ -18,14 +19,14 @@ const Watch = ({ projectId }) => {
     }
 
     const selectOption1 = () => {
-        const edge = graph.find(element => element.source && element.source === currentDisplay.id && 
+        const edge = graph.find(element => element.source && element.source === currentDisplay.id &&
             ((element.sourceHandle === "answer1") || (element.sourceHandle === "option1")))
         const nextNode = graph.find(element => element.id === edge.target)
         setCurrentDiplay(nextNode)
     }
 
     const selectOption2 = () => {
-        const edge = graph.find(element => element.source && element.source === currentDisplay.id && 
+        const edge = graph.find(element => element.source && element.source === currentDisplay.id &&
             ((element.sourceHandle === "answer2") || (element.sourceHandle === "option2")))
         const nextNode = graph.find(element => element.id === edge.target)
         setCurrentDiplay(nextNode)
@@ -52,7 +53,7 @@ const Watch = ({ projectId }) => {
 
             })
     }
-    useEffect(getGraph, [])
+    useEffect(getGraph, [projectId]) // TODO: Check what the thing in the array should be
 
     var controls = null
     if (currentDisplay && currentDisplay.type === "questionNode") {
@@ -65,7 +66,12 @@ const Watch = ({ projectId }) => {
     else if (currentDisplay && currentDisplay.type === "output") {
         controls = <p>THE END</p>
     }
-    else { // (currentDisplay.type === "videoNode" || currentDisplay.type === "input")
+    else if (currentDisplay && currentDisplay.type === "input") {
+        controls = (<div>
+            <button onClick={nextGraphIndex} >START</button>
+        </div>)
+    }
+    else { // currentDisplay.type === "videoNode"
         controls = (<div>
             <button onClick={nextGraphIndex} >Next</button>
         </div>)
@@ -73,9 +79,9 @@ const Watch = ({ projectId }) => {
 
     return (
         <div>
-            {currentDisplay ? null : <p>Loading Film</p> }
             {error}
             {/* {console.log(graph)} */}
+            { currentDisplay || error ? null : <MoonLoader size={40} color={"#123abc"}loading={true} /> }
             { controls }
             {currentDisplay ? <p>{JSON.stringify(currentDisplay)}</p> : null}
             {console.log(currentDisplay)}
