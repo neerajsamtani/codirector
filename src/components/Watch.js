@@ -2,36 +2,34 @@ import React, { useState, useEffect } from 'react'
 import firebase from 'firebase/app'
 import firebaseConfig from '../firebase'
 import { database } from './Canvas'
-import MoonLoader from "react-spinners/MoonLoader";
-
-// TODO: Use this to play videos: https://github.com/CookPete/react-player
+import MoonLoader from "react-spinners/MoonLoader"
+import ReactPlayer from 'react-player/youtube'
 
 const Watch = ({ projectId }) => {
 
     const [error, setError] = useState("")
     const [graph, setGraph] = useState([])
-    const [currentDisplay, setCurrentDiplay] = useState("")
+    const [currentDisplayJSON, setCurrentDiplayJSON] = useState("")
 
     const nextGraphIndex = () => {
-        const edge = graph.find(element => element.source && element.source === currentDisplay.id)
+        const edge = graph.find(element => element.source && element.source === currentDisplayJSON.id)
         const nextNode = graph.find(element => element.id === edge.target)
-        setCurrentDiplay(nextNode)
+        setCurrentDiplayJSON(nextNode)
     }
 
     const selectOption1 = () => {
-        const edge = graph.find(element => element.source && element.source === currentDisplay.id &&
+        const edge = graph.find(element => element.source && element.source === currentDisplayJSON.id &&
             ((element.sourceHandle === "answer1") || (element.sourceHandle === "option1")))
         const nextNode = graph.find(element => element.id === edge.target)
-        setCurrentDiplay(nextNode)
+        setCurrentDiplayJSON(nextNode)
     }
 
     const selectOption2 = () => {
-        const edge = graph.find(element => element.source && element.source === currentDisplay.id &&
+        const edge = graph.find(element => element.source && element.source === currentDisplayJSON.id &&
             ((element.sourceHandle === "answer2") || (element.sourceHandle === "option2")))
         const nextNode = graph.find(element => element.id === edge.target)
-        setCurrentDiplay(nextNode)
+        setCurrentDiplayJSON(nextNode)
     }
-
 
     const getGraph = () => {
         database.ref('/projects/' + projectId).once('value')
@@ -45,7 +43,7 @@ const Watch = ({ projectId }) => {
                         }
                     }
                     setGraph(initialGraph)
-                    setCurrentDiplay(initialGraph[0]) // TODO: Create a START and END function
+                    setCurrentDiplayJSON(initialGraph[0])
                     console.log(initialGraph)
                 } else {
                     setError("Film not found")
@@ -55,25 +53,38 @@ const Watch = ({ projectId }) => {
     }
     useEffect(getGraph, [projectId]) // TODO: Check what the thing in the array should be
 
-    var controls = null
-    if (currentDisplay && currentDisplay.type === "questionNode") {
-        controls = (<div>
-            <p>{currentDisplay.data.question}</p>
-            <button onClick={selectOption1} >{currentDisplay.data.option1}</button>
-            <button onClick={selectOption2} >{currentDisplay.data.option2}</button>
+    var currentDisplay = null
+    if (currentDisplayJSON && currentDisplayJSON.type === "questionNode") {
+        currentDisplay = (<div>
+            <p>{currentDisplayJSON.data.question}</p>
+            <button onClick={selectOption1} >{currentDisplayJSON.data.option1}</button>
+            <button onClick={selectOption2} >{currentDisplayJSON.data.option2}</button>
         </div>)
     }
-    else if (currentDisplay && currentDisplay.type === "output") {
-        controls = <p>THE END</p>
+    else if (currentDisplayJSON.type === "videoNode") {
+        currentDisplay = (<div>
+            <ReactPlayer 
+                className='react-player'
+                url={currentDisplayJSON.data.link}
+                width='810px'
+                height='540px'
+                playing={true} 
+                controls={false} 
+                pip={false}
+                loop={false}
+                muted={false}
+                volume={1}
+                onEnded={nextGraphIndex}
+                 />
+            </div>
+            )
     }
-    else if (currentDisplay && currentDisplay.type === "input") {
-        controls = (<div>
+    else if (currentDisplayJSON && currentDisplayJSON.type === "output") {
+        currentDisplay = <p>THE END</p>
+    }
+    else if (currentDisplayJSON && currentDisplayJSON.type === "input") {
+        currentDisplay = (<div>
             <button onClick={nextGraphIndex} >START</button>
-        </div>)
-    }
-    else { // currentDisplay.type === "videoNode"
-        controls = (<div>
-            <button onClick={nextGraphIndex} >Next</button>
         </div>)
     }
 
@@ -81,10 +92,10 @@ const Watch = ({ projectId }) => {
         <div>
             {error}
             {/* {console.log(graph)} */}
-            { currentDisplay || error ? null : <MoonLoader size={40} color={"#123abc"}loading={true} /> }
-            { controls }
-            {currentDisplay ? <p>{JSON.stringify(currentDisplay)}</p> : null}
-            {console.log(currentDisplay)}
+            { currentDisplayJSON || error ? null : <MoonLoader size={40} color={"#123abc"}loading={true} /> }
+            { currentDisplayJSON && !error ?  currentDisplay : null }
+            {/* {currentDisplayJSON ? <p>{JSON.stringify(currentDisplayJSON)}</p> : null} */}
+            {/* {console.log(currentDisplayJSON)} */}
         </div>
     )
 }
