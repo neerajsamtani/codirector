@@ -18,13 +18,15 @@ const SignIn = () => {
         auth.signInWithPopup(provider)
     }
     return (
-        <button className="right-button" onClick={signInWithGoogle}>Sign in with Google</button>
+        <button className="auth-button" onClick={signInWithGoogle}>
+            <span className="auth-text" >Sign in with Google</span>
+        </button>
     )
 }
 
 const SignOut = () => {
     return auth.currentUser && (
-        <button className="right-button" onClick={() => auth.signOut()} >Sign Out</button>
+        <button className="auth-button" onClick={() => auth.signOut()} >Sign Out</button>
     )
 }
 

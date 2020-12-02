@@ -1,4 +1,4 @@
-import react, { useState } from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
 const Home = () => {
@@ -15,17 +15,20 @@ const Home = () => {
     }
 
     return (
-        <div className="main">
-            <form onSubmit={handleFormSubmit}>
+        <div className="content">
+            <p className="enter-the-code" >Enter the Code</p>
+            <form className="film-id-form" onSubmit={handleFormSubmit}>
                 <input
-                    id="searchbox"
+                    className="search-box"
                     placeholder="Enter Film ID"
                     value={projectId}
                     onChange={handleProjectIdChange}
                 />
-                <button type="submit" className="button" >Watch</button>
+                {/* <button type="submit" className="button" >Watch</button> */}
+                <button className="watch-button" type="submit" >
+                    <span className="watch-text">Watch</span>
+                </button>
             </form>
-            <p>Example Movie: WeLImpeRjuSEThIeRNIC</p>
         </div>
     )
 }

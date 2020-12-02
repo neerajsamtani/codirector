@@ -12,3 +12,4 @@ const Header = ({ SignIn, SignOut, user }) => {
 };
 
 export default Header
+

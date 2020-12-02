@@ -1,224 +1,184 @@
-body {
-  font-family: sans-serif;
-  color: #111;
-}
+html {
+  position: relative;
+  width   : 1440px;
+  height  : 900px;
 
-html,
-body {
-  margin: 0;
-}
-
-html,
-body,
-#root {
-  height: 100%;
-}
-
-#root {
-  display: flex;
-  flex-direction: column;
+  background: #F6F6FA;
 }
 
 header {
-  padding: 10px;
-  border-bottom: 1px solid #eee;
-  display: flex;
-  font-weight: 700;
-  align-items: center;
+  position: absolute;
+  width   : 1440px;
+  height  : 69px;
+  left    : 0px;
+  top     : 0px;
+
+  background: #F0F0F2;
 }
 
 .logo {
-  text-decoration: none;
-  display: block;
-  line-height: 1;
-}
-
-header a,
-header a:focus,
-header a:active,
-header a:visited {
-  color: #111;
-}
-
-header a:hover {
-  color: #333;
-}
-
-.menu {
-  margin-left: auto;
-  background: #f3f3f3;
-  color: #333;
-  border: none;
-  padding: 5px 12px;
-  border-radius: 5px;
-}
-
-nav {
-  font-weight: 400;
-  display: none;
   position: absolute;
-  width: 94%;
-  top: 46px;
-  z-index: 10;
-  left: 0;
-  padding: 3%;
-  background: rgba(255, 255, 255, 0.9);
-}
+  width   : 103px;
+  height  : 23px;
+  left    : 40px;
+  top     : 23px;
 
-nav.is-open {
-  display: block;
-}
+  font-family: Work Sans;
+  font-style : normal;
+  font-weight: bold;
+  font-size  : 20px;
+  line-height: 23px;
 
-.button,
-button,
-nav a {
+  color: #656565;
+
+  opacity        : 0.8;
   text-decoration: none;
-  font-size: 14px;
-  background: #f3f3f3;
-  color: white;
-  padding: 6px 12px;
-  border-radius: 5px;
-  position: relative;
-  display: block;
-  margin-bottom: 5px;
-  text-align: center;
 }
 
-.button,
-button,
-nav a,
-nav a:focus,
-nav a:active,
-nav a:visited {
-  color: #333;
-}
+.auth-button {
+  display       : flex;
+  flex-direction: row;
+  align-items   : center;
+  padding       : 12px 16px;
 
-.button:hover,
-button:hover,
-nav a:hover {
-  cursor: pointer;
-  color: #333;
-  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.08);
-}
-
-nav a.active:before {
-  content: '';
   position: absolute;
-  width: 6px;
-  height: 6px;
-  background: white;
+  width   : 179px;
+  height  : 43px;
+  left    : 1221px;
+  top     : 13px;
+
+  /* Text */
+
+  border    : 1px solid #31373A;
+  box-sizing: border-box;
+  /* Drop Shadow_Button */
+
+  filter       : drop-shadow(0px 3px 32px rgba(0, 0, 0, 0.1));
+  border-radius: 6px;
+}
+
+.auth-text {
+  position: static;
+  width   : 147px;
+  height  : 19px;
+  left    : 16px;
+  top     : 12px;
+
+  font-family: Work Sans;
+  font-style : normal;
+  font-weight: normal;
+  font-size  : 16px;
+  line-height: 19px;
+  /* identical to box height */
+
+  text-align: right;
+
+  /* Text */
+
+  color: #31373A;
+
+  /* Inside Auto Layout */
+
+  flex     : none;
+  order    : 0;
+  flex-grow: 0;
+  margin   : 8px 0px;
+}
+
+.enter-the-code {
+  position: absolute;
+  width   : 268px;
+  height  : 42px;
+  left    : 585px;
+  top     : 374px;
+
+  font-family: Work Sans;
+  font-style : normal;
+  font-weight: normal;
+  font-size  : 36px;
+  line-height: 42px;
+  text-align : center;
+
+  /* Text */
+
+  color  : #31373A;
   opacity: 0.8;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
 }
 
-.button,
-button {
-  border: none;
-}
+.search-box {
+  display       : flex;
+  flex-direction: column;
+  align-items   : flex-start;
+  padding       : 20px;
 
-.button:focus,
-button:focus {
-  outline: none;
-}
-
-.button:active,
-button:active {
-  transform: translateY(1px);
-}
-
-.right-button {
-  margin-left:auto; 
-  margin-right:0;
-}
-
-.sourcedisplay {
   position: absolute;
-  top: 50px;
-  right: 15px;
-  z-index: 4;
-  text-decoration: none;
-  font-size: 12px;
-}
+  width   : 450px;
+  /* height  : 68px; */
+  left    : 396px;
+  top     : 448px;
 
-.sourcedisplay,
-.sourcedisplay:focus,
-.sourcedisplay:active,
-.sourcedisplay:visited {
-  color: #777;
-}
+  /* White */
 
-.sourcedisplay:hover {
-  color: #111;
-}
+  background: #FFFFFF;
+  /* Drop Shadow */
 
-.overview-example__add {
-  display: none;
-}
+  box-shadow: 0px 5px 32px rgba(0, 0, 0, 0.15);
 
-.react-flow__node a {
-  font-weight: 700;
-  color: #111;
-}
+  font-family: Work Sans;
+  font-style : normal;
+  font-weight: normal;
+  font-size  : 24px;
+  line-height: 28px;
 
-.react-flow__node.dark-node {
-  background: #0041d0;
-  color: #f8f8f8;
-}
+  /* Text */
 
-.react-flow__node-selectorNode {
-  font-size: 12px;
-  background: #f0f2f3;
-  border: 1px solid 555;
-  border-radius: 5px;
-  text-align: center;
-}
-
-.react-flow__node-selectorNode .react-flow__handle {
-  border-color: #f0f2f3;
-}
-
-.main{
-  clear:both;
-  top: 50%;
-  width:100%;
-  padding-top:300px;
-	text-align: center;
-}
-
-#searchbox{
-	font-size:16px;
-	height:26px;
-	width:600px;
+  color  : #31373A;
+  opacity: 0.5;
 }
 
 
-@media screen and (min-width: 768px) {
-  nav {
-    position: relative;
-    display: block;
-    margin-right: auto;
-    width: auto;
-    padding: 0;
-    top: auto;
-    left: auto;
-  }
 
-  .button,
-  button,
-  nav a {
-    font-size: 16px;
-    display: inline-block;
-    padding: 8px 12px;
-    margin: 0px 10px;
-  }
+.watch-button {
+  display       : flex;
+  flex-direction: row;
+  align-items   : center;
+  padding       : 20px;
 
-  .menu {
-    display: none;
-  }
+  position: absolute;
+  width   : 114px;
+  height  : 68px;
+  left    : 929px;
+  top     : 449px;
 
-  .overview-example__add {
-    display: block;
-  }
+  /* Green */
+
+  background: #52D095;
+  /* Drop Shadow_Button */
+
+  box-shadow   : 0px 3px 32px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+}
+
+.watch-text {
+  position: static;
+  width   : 74px;
+  height  : 28px;
+  left    : 20px;
+  top     : 20px;
+
+  font-family: Work Sans;
+  font-style : normal;
+  font-weight: normal;
+  font-size  : 24px;
+  line-height: 28px;
+
+  color: #FBFBFD;
+
+
+  /* Inside Auto Layout */
+
+  flex     : none;
+  order    : 0;
+  flex-grow: 0;
+  margin   : 8px 0px;
 }
