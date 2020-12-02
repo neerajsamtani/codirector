@@ -17,11 +17,11 @@ const Projects = ({ user }) => {
     // TODO: Create a project
 
     return (
-        <div>
-            <p>{user.displayName}'s Projects</p>
+        <div className="home">
+            <p className="projects-owner" >{user.displayName}'s Projects</p>
             <ul>
                 {projects
-                    ? projects.map(projectId => <Link to={`/canvas/${projectId}`} key={projectId}>{projectId}</Link>)
+                    ? projects.map(projectId => <Link to={`/canvas/${projectId}`} key={projectId} className="project-id-text" >{projectId}</Link>)
                     : null}
             </ul>
         </div>

@@ -1,6 +1,7 @@
 body {
-  font-family: sans-serif;
-  color: #111;
+  font-family: Work Sans;
+  font-style : normal;
+  font-weight: normal;
 }
 
 html,
@@ -15,54 +16,57 @@ body,
 }
 
 #root {
-  display: flex;
+  display       : flex;
   flex-direction: column;
 }
 
 header {
-  padding: 10px;
-  border-bottom: 1px solid #eee;
-  display: flex;
-  font-weight: 700;
-  align-items: center;
+  padding         : 10px;
+  /* border-bottom: 1px solid #eee; */
+  display         : flex;
+  font-weight     : 700;
+  align-items     : center;
+  background-color: #292D3A;
+  color           : #FFFFFF;
 }
 
 .logo {
   text-decoration: none;
-  display: block;
-  line-height: 1;
+  display        : block;
+  line-height    : 1;
+  color          : #FFFFFF;
 }
 
 header a,
 header a:focus,
 header a:active,
 header a:visited {
-  color: #111;
+  color: #FFFFFF;
 }
 
 header a:hover {
-  color: #333;
+  color: #cacaca;
 }
 
 .menu {
-  margin-left: auto;
-  background: #f3f3f3;
-  color: #333;
-  border: none;
-  padding: 5px 12px;
+  margin-left  : auto;
+  background   : #f3f3f3;
+  color        : #333;
+  border       : none;
+  padding      : 5px 12px;
   border-radius: 5px;
 }
 
 nav {
   font-weight: 400;
-  display: none;
-  position: absolute;
-  width: 94%;
-  top: 46px;
-  z-index: 10;
-  left: 0;
-  padding: 3%;
-  background: rgba(255, 255, 255, 0.9);
+  display    : none;
+  position   : absolute;
+  width      : 94%;
+  top        : 46px;
+  z-index    : 10;
+  left       : 0;
+  padding    : 3%;
+  background : rgba(255, 255, 255, 0.9);
 }
 
 nav.is-open {
@@ -73,15 +77,15 @@ nav.is-open {
 button,
 nav a {
   text-decoration: none;
-  font-size: 14px;
-  background: #f3f3f3;
-  color: white;
-  padding: 6px 12px;
-  border-radius: 5px;
-  position: relative;
-  display: block;
-  margin-bottom: 5px;
-  text-align: center;
+  font-size      : 14px;
+  background     : #f3f3f3;
+  color          : white;
+  padding        : 6px 12px;
+  border-radius  : 5px;
+  position       : relative;
+  display        : block;
+  margin-bottom  : 5px;
+  text-align     : center;
 }
 
 .button,
@@ -96,21 +100,21 @@ nav a:visited {
 .button:hover,
 button:hover,
 nav a:hover {
-  cursor: pointer;
-  color: #333;
+  cursor    : pointer;
+  color     : #333;
   box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.08);
 }
 
 nav a.active:before {
-  content: '';
-  position: absolute;
-  width: 6px;
-  height: 6px;
+  content   : '';
+  position  : absolute;
+  width     : 6px;
+  height    : 6px;
   background: white;
-  opacity: 0.8;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  opacity   : 0.8;
+  left      : 0;
+  top       : 50%;
+  transform : translateY(-50%);
 }
 
 .button,
@@ -128,18 +132,13 @@ button:active {
   transform: translateY(1px);
 }
 
-.right-button {
-  margin-left:auto; 
-  margin-right:0;
-}
-
 .sourcedisplay {
-  position: absolute;
-  top: 50px;
-  right: 15px;
-  z-index: 4;
+  position       : absolute;
+  top            : 50px;
+  right          : 15px;
+  z-index        : 4;
   text-decoration: none;
-  font-size: 12px;
+  font-size      : 12px;
 }
 
 .sourcedisplay,
@@ -159,59 +158,185 @@ button:active {
 
 .react-flow__node a {
   font-weight: 700;
-  color: #111;
+  color      : #111;
 }
 
 .react-flow__node.dark-node {
   background: #0041d0;
-  color: #f8f8f8;
+  color     : #f8f8f8;
 }
 
 .react-flow__node-selectorNode {
-  font-size: 12px;
-  background: #f0f2f3;
-  border: 1px solid 555;
+  font-size    : 12px;
+  background   : #f0f2f3;
+  border       : 1px solid 555;
   border-radius: 5px;
-  text-align: center;
+  text-align   : center;
 }
 
 .react-flow__node-selectorNode .react-flow__handle {
   border-color: #f0f2f3;
 }
 
-.main{
-  clear:both;
-  top: 50%;
-  width:100%;
-  padding-top:300px;
-	text-align: center;
+.center-loader {
+  clear     : both;
+  top       : 50%;
+  margin    : 250px 0px 0px 750px;
+  padding   : none;
+  text-align: center;
 }
 
-#searchbox{
-	font-size:16px;
-	height:26px;
-	width:600px;
+.center-start {
+  clear     : both;
+  top       : 50%;
+  margin    : 300px 0px 0px 0px;
+  padding   : none;
+  text-align: center;
+}
+
+.center-video {
+  clear     : both;
+  top       : 50%;
+  margin    : 0px 0px 0px 300px;
+  padding   : none;
+  text-align: center;
+}
+
+.center-question {
+  clear     : both;
+  top       : 50%;
+  margin    : 250px 0px 0px 0px;
+  padding   : none;
+  text-align: center;
+  color     : #FFFFFF;
+}
+
+.center-projects {
+  clear     : both;
+  top       : 50%;
+  margin    : 250px 0px 0px 0px;
+  padding   : none;
+  text-align: center;
+  color     : #FFFFFF;
+}
+
+.watch-button,
+.enter-experience,
+.replay-experience {
+  padding         : 20px 20px;
+  color           : #FFFFFF;
+  background-color: #52D095;
+}
+
+.watch-button:hover,
+.enter-experience:hover,
+.replay-experience:hover {
+  padding         : 20px 20px;
+  color           : #FFFFFF;
+  background-color: #44a87a;
+}
+
+.option-button,
+.add-node-button {
+  padding         : 10px 20px;
+  color           : #FFFFFF;
+  background-color: #7A70F9;
+}
+
+.option-button:hover,
+.add-node-button:hover {
+  padding         : 10px 20px;
+  color           : #FFFFFF;
+  background-color: #6159c9;
+}
+
+.canvas-toolbar {
+  background-color: #2D3543;
+}
+
+.enter-the-code,
+.question-text,
+.projects-owner,
+.fin {
+  color    : #FFFFFF;
+  font-size: 30px;
+}
+
+.project-id-text {
+  color    : #FFFFFF;
+  font-size: 20px;
+}
+
+.searchbox {
+  font-size: 16px;
+  height   : 26px;
+  width    : 600px;
+  padding: 14px 20px;
+  border-radius: 5px;
+  border: none;
+}
+
+.searchbox:focus {
+  outline: none;
+}
+
+.home {
+  clear           : both;
+  width           : 100%;
+  height          : 100%;
+  padding-top     : 200px;
+  text-align      : center;
+  background-color: #1C1F27;
+  color: #FFFFFF;
+}
+
+.my-projects {
+  margin-left : auto;
+  margin-right: 0;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.auth-button {
+  margin-left : auto;
+  margin-right: 0;
+  color: #FFFFFF;
+  border: 1px solid #FFFFFF;
+  background-color: #292D3A;
+}
+
+.auth-button:hover {
+  margin-left : auto;
+  margin-right: 0;
+  color: #FFFFFF;
+  border: 1px solid #FFFFFF;
+  background-color: #1e2230;
+}
+
+.watch {
+  height          : 100%;
+  background-color: #1C1F27;
 }
 
 
 @media screen and (min-width: 768px) {
   nav {
-    position: relative;
-    display: block;
+    position    : relative;
+    display     : block;
     margin-right: auto;
-    width: auto;
-    padding: 0;
-    top: auto;
-    left: auto;
+    width       : auto;
+    padding     : 0;
+    top         : auto;
+    left        : auto;
   }
 
   .button,
   button,
   nav a {
     font-size: 16px;
-    display: inline-block;
-    padding: 8px 12px;
-    margin: 0px 10px;
+    display  : inline-block;
+    padding  : 8px 12px;
+    margin   : 0px 10px;
   }
 
   .menu {

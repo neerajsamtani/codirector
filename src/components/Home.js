@@ -15,17 +15,18 @@ const Home = () => {
     }
 
     return (
-        <div className="main">
+        <div className="home">
+            <p class="enter-the-code">Enter the Code</p>
             <form onSubmit={handleFormSubmit}>
                 <input
-                    id="searchbox"
-                    placeholder="Enter Film ID"
+                    className="searchbox"
+                    placeholder="Ex: LoCkeYL"
                     value={projectId}
                     onChange={handleProjectIdChange}
                 />
-                <button type="submit" className="button" >Watch</button>
+                <button type="submit" className="watch-button" >Watch</button>
             </form>
-            <p>Example Movie: WeLImpeRjuSEThIeRNIC</p>
+            {/* <p>Example Movie: WeLImpeRjuSEThIeRNIC</p> */}
         </div>
     )
 }

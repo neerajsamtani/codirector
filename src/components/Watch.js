@@ -11,6 +11,12 @@ const Watch = ({ projectId }) => {
     const [graph, setGraph] = useState([])
     const [currentDisplayJSON, setCurrentDiplayJSON] = useState("")
 
+    const replayExperience = () => {
+        // TODO: Don't hardcode
+        const startNode = graph.find(element => element.id === "1")
+        setCurrentDiplayJSON(startNode)
+    }
+
     const nextGraphIndex = () => {
         const edge = graph.find(element => element.source && element.source === currentDisplayJSON.id)
         const nextNode = graph.find(element => element.id === edge.target)
@@ -55,45 +61,48 @@ const Watch = ({ projectId }) => {
 
     var currentDisplay = null
     if (currentDisplayJSON && currentDisplayJSON.type === "questionNode") {
-        currentDisplay = (<div>
-            <p>{currentDisplayJSON.data.question}</p>
-            <button onClick={selectOption1} >{currentDisplayJSON.data.option1}</button>
-            <button onClick={selectOption2} >{currentDisplayJSON.data.option2}</button>
+        currentDisplay = (<div className="center-question" >
+            <p className="question-text" >{currentDisplayJSON.data.question}</p>
+            <button onClick={selectOption1} className="option-button">{currentDisplayJSON.data.option1}</button>
+            <button onClick={selectOption2} className="option-button">{currentDisplayJSON.data.option2}</button>
         </div>)
     }
     else if (currentDisplayJSON.type === "videoNode") {
-        currentDisplay = (<div>
-            <ReactPlayer 
+        currentDisplay = (<div className="center-video">
+            <ReactPlayer
                 className='react-player'
                 url={currentDisplayJSON.data.link}
-                width='810px'
-                height='540px'
-                playing={true} 
-                controls={false} 
+                width='900px'
+                height='650px'
+                playing={true}
+                controls={false}
                 pip={false}
                 loop={false}
                 muted={false}
                 volume={1}
                 onEnded={nextGraphIndex}
-                 />
-            </div>
-            )
+            />
+        </div>
+        )
     }
     else if (currentDisplayJSON && currentDisplayJSON.type === "output") {
-        currentDisplay = <p>THE END</p>
+        currentDisplay = <div className="center-start">
+            <p className="fin">Fin.</p>
+            <button onClick={replayExperience} className="replay-experience">Replay Experience</button>
+        </div>
     }
     else if (currentDisplayJSON && currentDisplayJSON.type === "input") {
-        currentDisplay = (<div>
-            <button onClick={nextGraphIndex} >START</button>
+        currentDisplay = (<div className="center-start">
+            <button onClick={nextGraphIndex} className="enter-experience">Enter Experience</button>
         </div>)
     }
 
     return (
-        <div>
+        <div className="watch">
             {error}
             {/* {console.log(graph)} */}
-            { currentDisplayJSON || error ? null : <MoonLoader size={40} color={"#123abc"}loading={true} /> }
-            { currentDisplayJSON && !error ?  currentDisplay : null }
+            { currentDisplayJSON || error ? null : <div className="center-loader"><MoonLoader size={50} color={"#FFFFFF"} loading={true} /></div>}
+            { currentDisplayJSON && !error ? currentDisplay : null}
             {/* {currentDisplayJSON ? <p>{JSON.stringify(currentDisplayJSON)}</p> : null} */}
             {/* {console.log(currentDisplayJSON)} */}
         </div>
