@@ -1,4 +1,4 @@
-import react, { useState } from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
 const Home = () => {
@@ -16,7 +16,7 @@ const Home = () => {
 
     return (
         <div className="home">
-            <p class="enter-the-code">Enter the Code</p>
+            <p className="enter-the-code">Enter the Code</p>
             <form onSubmit={handleFormSubmit}>
                 <input
                     className="searchbox"

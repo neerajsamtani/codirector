@@ -43,7 +43,8 @@ const Watch = ({ projectId }) => {
                 var initialGraph = []
                 if (snapshot.val()) {
                     var elements = snapshot.val().elements
-                    for (const currentElement of elements) {
+                    for (const i in elements) {
+                        const currentElement = elements[i]
                         if (currentElement) {
                             initialGraph.push(currentElement)
                         }
