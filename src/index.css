@@ -268,12 +268,12 @@ button:active {
 }
 
 .searchbox {
-  font-size: 16px;
-  height   : 26px;
-  width    : 600px;
-  padding: 14px 20px;
+  font-size    : 16px;
+  height       : 26px;
+  width        : 600px;
+  padding      : 14px 20px;
   border-radius: 5px;
-  border: none;
+  border       : none;
 }
 
 .searchbox:focus {
@@ -287,29 +287,36 @@ button:active {
   padding-top     : 200px;
   text-align      : center;
   background-color: #1C1F27;
-  color: #FFFFFF;
+  color           : #FFFFFF;
 }
 
 .my-projects {
-  margin-left : auto;
-  margin-right: 0;
-  color: #FFFFFF;
+  margin-left    : auto;
+  margin-right   : 0;
+  color          : #FFFFFF;
   text-decoration: none;
 }
 
+.canvas-project-id {
+  margin-left     : auto;
+  margin-right    : 0;
+  color           : #FFFFFF;
+  text-decoration : none;
+}
+
 .auth-button {
-  margin-left : auto;
-  margin-right: 0;
-  color: #FFFFFF;
-  border: 1px solid #FFFFFF;
+  margin-left     : auto;
+  margin-right    : 0;
+  color           : #FFFFFF;
+  border          : 1px solid #FFFFFF;
   background-color: #292D3A;
 }
 
 .auth-button:hover {
-  margin-left : auto;
-  margin-right: 0;
-  color: #FFFFFF;
-  border: 1px solid #FFFFFF;
+  margin-left     : auto;
+  margin-right    : 0;
+  color           : #FFFFFF;
+  border          : 1px solid #FFFFFF;
   background-color: #1e2230;
 }
 

@@ -136,7 +136,7 @@ const Canvas = ({ projectId }) => {
 
   return (
     <>
-      <Buttons addVideoNode={addVideoNode} addQuestionNode={addQuestionNode} />
+      <Buttons addVideoNode={addVideoNode} addQuestionNode={addQuestionNode} projectId={projectId} />
       <ReactFlow
       elements={elements}
       onElementsRemove={onElementsRemove}
