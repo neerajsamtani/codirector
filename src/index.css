@@ -298,10 +298,10 @@ button:active {
 }
 
 .canvas-project-id {
-  margin-left     : auto;
-  margin-right    : 0;
-  color           : #FFFFFF;
-  text-decoration : none;
+  margin-left    : auto;
+  margin-right   : 0;
+  color          : #FFFFFF;
+  text-decoration: none;
 }
 
 .auth-button {

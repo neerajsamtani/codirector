@@ -56,7 +56,7 @@ const App = () => {
             <Header SignIn={SignIn} SignOut={SignOut} user={user} />
             <Switch>
                 <Route path="/canvas/:projectId" render={() =>
-                    <Canvas projectId={canvasProjectId} />
+                    <Canvas projectId={canvasProjectId} user={user} />
                 } />
                 <Route path="/watch/:projectId">
                     <Watch projectId={watchProjectId} />

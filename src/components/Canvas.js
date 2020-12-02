@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactFlow, { removeElements, addEdge, MiniMap, Controls, Background } from 'react-flow-renderer';
+import { useHistory } from 'react-router-dom'
 import VideoNode from './VideoNode';
 import QuestionNode from './QuestionNode';
 import Buttons from './Buttons'
@@ -10,7 +11,7 @@ import firebaseConfig from '../firebase'
 firebase.initializeApp(firebaseConfig)
 const database = firebase.database()
 
-export {database}
+export { database }
 
 // TODO: Do I need to listen for events to update local state? Yes, if multiple people are collaborating. 
 // Yes, when making changes directly on firebase and seeing hot reloading. Not for MVP
@@ -29,10 +30,15 @@ const nodeTypes = {
   questionNode: QuestionNode,
 };
 
-const Canvas = ({ projectId }) => {
-  
+const Canvas = ({ projectId, user }) => {
+
   const [elements, setElements] = useState([]);
   const [nextId, setNextId] = useState(0);
+  const history = useHistory()
+
+  if (user === null) {
+    history.push("/")
+  }
 
   // Get elements from Firebase
   const hook = () => {
@@ -58,19 +64,19 @@ const Canvas = ({ projectId }) => {
       type: 'videoNode',
       style: { border: '1px solid #777', padding: 10, background: '#FFF' },
       data: {
-          label: "<strong>VIDEO</strong> NODE",
-          link: '',
-          thumbnail: '',
+        label: "<strong>VIDEO</strong> NODE",
+        link: '',
+        thumbnail: '',
       },
       position: { x: 0, y: 0 }
     }
 
     const newVideoNodeJSON = JSON.parse(JSON.stringify(newVideoNode))
     database.ref('projects/' + projectId + "/elements/" + (nextId - 1)).set(newVideoNodeJSON)
-    .then(setElements(elements.concat(newVideoNode)))
+      .then(setElements(elements.concat(newVideoNode)))
 
     database.ref('projects/' + projectId + "/nextId").set(nextId + 1)
-    .then(setNextId(nextId + 1))
+      .then(setNextId(nextId + 1))
   }
 
   const addQuestionNode = () => {
@@ -79,20 +85,20 @@ const Canvas = ({ projectId }) => {
       type: 'questionNode',
       style: { border: '1px solid #777', padding: 10, background: '#FFF' },
       data: {
-          label: "<strong>QUESTION</strong> NODE",
-          question:'',
-          option1:'',
-          option2:'',
+        label: "<strong>QUESTION</strong> NODE",
+        question: '',
+        option1: '',
+        option2: '',
       },
       position: { x: 0, y: 0 },
-      }
-    
+    }
+
     const newQuestionNodeJSON = JSON.parse(JSON.stringify(newQuestionNode))
     database.ref('projects/' + projectId + "/elements/" + (nextId - 1)).set(newQuestionNode)
-    .then(setElements(elements.concat(newQuestionNode)))
+      .then(setElements(elements.concat(newQuestionNode)))
 
     database.ref('projects/' + projectId + "/nextId").set(nextId + 1)
-    .then(setNextId(nextId + 1))
+      .then(setNextId(nextId + 1))
   }
 
   const onElementsRemove = (elementsToRemove) => {
@@ -101,7 +107,7 @@ const Canvas = ({ projectId }) => {
 
     var deletions = {}
     for (const elementId of elementsToRemoveIds) {
-      deletions['projects/' + projectId + "/elements/" + (elementId-1)] = null
+      deletions['projects/' + projectId + "/elements/" + (elementId - 1)] = null
     }
 
     database.ref().update(deletions)
@@ -128,43 +134,43 @@ const Canvas = ({ projectId }) => {
       ...oldNode,
       position: node.position
     }
-    database.ref('projects/' + projectId + "/elements/" + (node.id-1) + "/position/").set(node.position)
+    database.ref('projects/' + projectId + "/elements/" + (node.id - 1) + "/position/").set(node.position)
       .then(
-        setElements(els => els.map(e => e.id === node.id ? updatedNode : e ))
-        )
+        setElements(els => els.map(e => e.id === node.id ? updatedNode : e))
+      )
   }
 
   return (
     <>
       <Buttons addVideoNode={addVideoNode} addQuestionNode={addQuestionNode} projectId={projectId} />
       <ReactFlow
-      elements={elements}
-      onElementsRemove={onElementsRemove}
-      onConnect={onConnect}
-      onLoad={onLoad}
-      onNodeDragStop={onNodeDragStop}
-      connectionLineStyle={{ stroke: '#ddd' }}
-      nodeTypes={nodeTypes}
-    >
-      <MiniMap
-        nodeStrokeColor={(n) => {
-          if (n.style?.background) return n.style.background;
-          if (n.type === 'input') return '#0041d0';
-          if (n.type === 'output') return '#ff0072';
-          if (n.type === 'default') return '#1a192b';
+        elements={elements}
+        onElementsRemove={onElementsRemove}
+        onConnect={onConnect}
+        onLoad={onLoad}
+        onNodeDragStop={onNodeDragStop}
+        connectionLineStyle={{ stroke: '#ddd' }}
+        nodeTypes={nodeTypes}
+      >
+        <MiniMap
+          nodeStrokeColor={(n) => {
+            if (n.style?.background) return n.style.background;
+            if (n.type === 'input') return '#0041d0';
+            if (n.type === 'output') return '#ff0072';
+            if (n.type === 'default') return '#1a192b';
 
-          return '#eee';
-        }}
-        nodeColor={(n) => {
-          if (n.style?.background) return n.style.background;
+            return '#eee';
+          }}
+          nodeColor={(n) => {
+            if (n.style?.background) return n.style.background;
 
-          return '#fff';
-        }}
-        nodeBorderRadius={2}
-      />
-      <Controls />
-      <Background color="#aaa" gap={16} />
-    </ReactFlow>
+            return '#fff';
+          }}
+          nodeBorderRadius={2}
+        />
+        <Controls />
+        <Background color="#aaa" gap={16} />
+      </ReactFlow>
     </>
   );
 };
